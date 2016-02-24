@@ -1,0 +1,125 @@
+<apex:page showHeader="true" sidebar="true" docType="html-5.0" standardController="Account" extensions="ContactTransferPageController">
+    <apex:stylesheet value="{!URLFOR($Resource.SLDS_0_12_1, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+    <apex:includeScript value="https://code.jquery.com/jquery-2.2.0.min.js"/>
+
+	<apex:form >
+		<div class="slds">
+			
+			<c:PageHeader title="Contact Transfer" subtitle="Select the contacts to transfer" icon="/assets/icons/standard/contact_60.png"/>
+
+			<!-- Page Messages -->
+			<apex:outputPanel id="error-message" layout="block" styleClass="slds-container--center slds-m-vertical--medium slds-text-align--center" style="background-color:darkred;">
+				<apex:repeat value="{!messages}" var="message"> 
+					<div >
+						<apex:outputText style="color:white;" styleClass="slds-m-horizontal--x-small" value="{!message}"/>
+					</div>
+				</apex:repeat>
+			</apex:outputPanel>
+
+			<!-- Search Box -->
+			<div class="slds-p-around--medium slds-col slds-size--1-of-1" style="background-color:#EEEEEE; border:1px solid #C4C6C9;">
+				<div xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	  				<div class="slds-grid slds-wrap">
+					
+						<div class="slds-col--padded">
+							<apex:outputLabel for="css-search-key-word" styleClass="slds-form-element__label">Transfer To:</apex:outputLabel>
+							<div class="slds-form-element__control">
+								<!-- <apex:inputField id="css-search-key-word" styleClass="slds-input_lookup" value="{!accountLookup.AccountId}" /> -->
+								<c:SLDSLookup objectType="Account" thePageController="{!this}"/>
+							</div>
+						</div>
+
+						<!-- Buttons -->
+						<div class="slds-col--padded" style="text-align:right;">
+	      					<legend class="slds-form-element__label">&nbsp;</legend>
+							<apex:commandButton action="{!transferContacts}" styleClass="slds-button slds-button--brand" style="white-space:nowrap" value="Transfer" 
+								reRender="css-search-table,error-message"/>
+							<apex:commandButton action="{!cancel}" styleClass="slds-button slds-button--brand" style="white-space:nowrap" value="Cancel"
+								immediate="true"/>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<!-- END Search Box -->
+		</div>
+
+		<div class="slds-m-vertical--medium">
+			<apex:outputPanel id="css-search-table">
+	          
+			<!-- Loading Spinner -->
+			<div id="css-search-spinner" class="slds-m-vertical--medium" style="display:none;">
+				<div class="slds-grid slds-grid--align-center">
+					<div class="slds-spinner--medium slds-col">
+						<img src="{!URLFOR($Resource.SLDS_0_12_1, '/assets/images/spinners/slds_spinner.gif')}" alt="Loading..." />
+					</div>
+				</div>
+			</div>
+	          
+			<!-- Search Results -->
+				<table class="slds-table slds-table--bordered slds-max-medium-table--stacked-horizontal slds-table--striped">
+	              
+					<thead>
+						<tr class="slds-text-heading--label">
+							<th class="slds-cell-shrink" scope="col">
+								<label class="slds-checkbox" for="select-all">
+									<input name="checkbox" type="checkbox" id="select-all" onclick="selectAll(this);" />
+									<span class="slds-checkbox--faux"></span>
+									<span class="slds-form-element__label slds-assistive-text">select all</span>
+								</label>
+							</th>
+							<apex:repeat value="{!$ObjectType.Contact.FieldSets.Transfer_Fields}" var="field"> 
+								<th scope="col">
+									{!field.Label}
+								</th>
+							</apex:repeat>
+						</tr>
+					</thead>
+
+					<tbody>
+						<apex:repeat value="{!contacts}" var="contactWrapper"> 
+							<tr class="slds-hint-parent">
+								<td>
+									<div class="slds-form-element">
+										<apex:outputLabel styleClass="slds-checkbox" for="selectCheckbox">
+											<apex:inputCheckbox id="selectCheckbox" value="{!contactWrapper.isSelected}" />
+											<span class="slds-checkbox--faux"></span>
+											<span class="slds-form-element__label"></span>
+										</apex:outputLabel>
+									</div>
+								</td>
+
+								<apex:repeat value="{!$ObjectType.Contact.FieldSets.Transfer_Fields}" var="field"> 
+									<td data-label="{!field.Label}">
+										<span style="white-space:normal">
+											<apex:outputField value="{!contactWrapper.contact[field.FieldPath]}" style="white-space:normal" />
+										</span>
+									</td>
+								</apex:repeat> 
+							</tr> 
+						</apex:repeat>
+					</tbody>
+
+				</table>
+			</apex:outputPanel>
+		</div>
+	</apex:form>
+
+
+	<script type="text/javascript">
+		(function(w, $)
+		{
+			w.selectAll = function(elem){
+				$('input[id$="selectCheckbox"]').each(function(k,v){
+					if ( elem.checked === true ){
+						$(v).prop('checked', true);
+					}
+					else{
+						$(v).prop('checked', false);
+					}
+				});
+			};
+		}(window,jQuery));
+	</script>
+
+</apex:page>
