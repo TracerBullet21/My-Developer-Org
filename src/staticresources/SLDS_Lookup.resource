@@ -10,7 +10,7 @@
 			vm.errors = '',
 			vm.noResultsMessage = '',
 			vm.whereClause = '',
-			vm.disableInput = false,
+			vm.searching = false,
 			vm.sObjectType = '';
 
 		
@@ -26,12 +26,12 @@
 				return;
 			}
 
-			vm.disableInput = true;
+			vm.searching = true;
 
 			searchForRecords(vm.sObjectType, vm.recordName, vm.whereClause).then(
 				function(result)
 				{
-					vm.disableInput = false;
+					vm.searching = false;
 					vm.foundRecords = result;
 					if ( result.length == 0 ){
 						vm.noResultsMessage = 'No results were found';
@@ -39,7 +39,7 @@
 				},
 				function(result)
 				{
-					vm.disableInput = false;
+					vm.searching = false;
 					vm.errors = result.message;
 				}
 			);
@@ -48,6 +48,7 @@
 		vm.closeDropdown = function(){
 			vm.foundRecords = [];
 			vm.noResultsMessage = '';
+			vm.recordName = '';
 		},
 
 		vm.closeErrorBox = function()
@@ -60,14 +61,27 @@
 			var selectedRecord = vm.foundRecords[index];
 			vm.recordName = selectedRecord.Name;
 			vm.closeDropdown();
-			console.log( selectedRecord.Name );
-			console.log( selectedRecord.Id );
 			assignToController( selectedRecord.Name, selectedRecord.Id );
-		},
-
-		vm.redirectToDetailPage = function(){
-			window.location = '/agents/ac_opportunity_detail?Id=' + vm.opportunityId + '&tab=related';
 		};
+
 	}]);
+
+	angular.module('lookup').directive('ngEnter', function()
+	{
+	    return function (scope, element, attrs)
+	    {
+	        element.bind("keydown keypress", function (event) 
+	        {
+	            if(event.which === 13)
+	            {
+	                scope.$apply(function ()
+	                {
+	                    scope.$eval(attrs.ngEnter);
+	                });
+	                event.preventDefault();
+	            }
+	        });
+	    };
+	});
 
 }(window, jQuery));

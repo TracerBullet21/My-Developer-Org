@@ -11,7 +11,7 @@
 	<apex:stylesheet value="{!URLFOR($Resource.SLDS_0_12_1, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
 
 	<!-- <apex:form > -->
-	<apex:actionRegion>
+	<apex:actionRegion >
 		<apex:actionFunction action="{!assignToCtrl}" name="assignToController" reRender="none">
 			<apex:param assignTo="{!objectName}" name="a" value=""/>
 			<apex:param assignTo="{!objectId}" name="b" value=""/>
@@ -27,7 +27,7 @@
 			<div class="slds-notify-container">
 				<div class="slds-notify slds-notify--toast slds-theme--error slds-theme--alert-texture" role="alert">
 					<span class="slds-assistive-text">Error</span>
-				    <button class="slds-button slds-button--icon-inverse slds-notify__close" ng-click="search.closeErrorBox()">
+				    <button type="button" class="slds-button slds-button--icon-inverse slds-notify__close" ng-click="search.closeErrorBox()">
 						<svg aria-hidden="true" class="slds-button__icon slds-button__icon--large">
 							<use xlink:href="{!URLFOR($Resource.SLDS_0_12_1,'/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
 						</svg>
@@ -47,15 +47,20 @@
 
 						<div class="slds-form-element">
 							<div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
-								<a ng-click="search.closeDropdown()">
+								<a ng-hide="search.searching" ng-click="search.closeDropdown()">
 									<svg aria-hidden="true" class="slds-input__icon">
 										<use xlink:href="{!URLFOR($Resource.SLDS_0_12_1,'/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
+									</svg>
+								</a>
+								<a ng-show="search.searching">
+									<svg aria-hidden="true" class="slds-input__icon">
+										<use xlink:href="{!URLFOR($Resource.SLDS_0_12_1,'/assets/icons/utility-sprite/svg/symbols.svg#threedots')}"></use>
 									</svg>
 								</a>
 								<div class="slds-pill__container slds-hide"></div>
 								<input ng-model="search.recordName" id="lookup" class="slds-input slds-show" type="text" aria-autocomplete="list" 
 									ng-model-options="{debounce: 750}" role="combobox" aria-expanded="true" aria-activedescendant="" 
-									ng-change="search.search()" autocomplete="off" ng-disabled="search.disableInput" placeholder="Type to search for records" />
+									ng-change="search.search()" autocomplete="off" placeholder="Type to search for records" ang-enter="search.search()"/>
 							</div>
 						</div>
 
@@ -75,14 +80,13 @@
 								</li>
 							</ul>
 							<div class="slds-lookup__item">
-								<button type="button" class="slds-button" ng-click="search.closeDropdown()" >
+								<button class="slds-button" ng-click="search.closeDropdown()">
 									<svg aria-hidden="true" class="slds-icon slds-icon-text-default slds-icon--small">
 										<use xlink:href="{!URLFOR($Resource.SLDS_0_12_1,'/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
 									</svg>Close
 								</button>
+							</div>''
 							</div>
-						</div>
-
 					</div>
     			</div>
     		</div>
