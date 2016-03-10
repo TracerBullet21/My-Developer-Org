@@ -1,0 +1,79 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" controller="CSS_ListController">
+  <div xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <apex:form id="listForm">
+      <div class="slds-grid slds-wrap">
+
+        <!-- Keyword Search Filter -->
+        <div class="slds-col--padded">
+          <apex:outputLabel for="css-search-key-word" styleClass="slds-form-element__label">Keyword Search
+            <a href="#" class="css-tooltip" title="{!$Label.CSS_Search_Help_Opportunities}" data-toggle="tooltip">
+              <img class="slds-icon slds-icon--small" style="width:16px;height:16px;position:relative;top:-3px;" src="{!URLFOR($Resource.SLDS092, '/assets/icons/utility/info_60.png')}" alt="" />
+            </a>
+          </apex:outputLabel>
+          <div class="slds-form-element">
+            <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+              <svg aria-hidden="true" class="slds-input__icon">
+                <use xlink:href="{!URLFOR($Resource.SLDS092, '/assets/icons/utility-sprite/svg/symbols.svg#search')}"></use>
+              </svg>
+              <apex:input id="css-search-key-word"  value="{!keys}" styleClass="slds-input" type="text" />
+            </div>
+          </div>
+        </div>
+        <!-- End Keyword Search Filter -->
+
+        <!-- Record Type Filter -->
+        <div class="slds-col--padded">
+          <div class="slds-form-element">
+            <apex:outputLabel for="css-search-opportunity-type" styleClass="slds-form-element__label">Opportunity Type</apex:outputLabel>
+            <div class="slds-form-element__control">
+              <apex:selectList id="css-search-opportunity-type" styleClass="slds-select" value="{!recordType}" multiselect="false" size="1">
+                <apex:selectOption itemValue="" itemLabel="Show All"></apex:selectOption>
+                <apex:selectOption itemValue="012i00000011WNiAAM" itemLabel="Lowe's Jobs"></apex:selectOption>
+                <apex:selectOption itemValue="012i00000011WNhAAM" itemLabel="Lowe's Detail"></apex:selectOption>
+              </apex:selectList>
+            </div>
+          </div>
+        </div>
+        <!-- End Record Filter -->
+
+        <!-- Stage Name Filter -->
+        <div class="slds-col--padded">
+          <div class="slds-form-element">
+            <apex:outputLabel for="css-search-stage" styleClass="slds-form-element__label">Stage</apex:outputLabel>
+            <div class="" style="margin:0px;">
+              <apex:selectList id="css-search-stage" value="{!stageName}" multiselect="true" size="3" style="min-width:200px;width:100%">
+                <apex:selectOption itemValue="Accepted" itemLabel="Accepted"></apex:selectOption>
+                <apex:selectOption itemValue="Pending" itemLabel="Pending"></apex:selectOption>
+                <apex:selectOption itemValue="Declined" itemLabel="Declined"></apex:selectOption>
+                <apex:selectOption itemValue="Scheduled" itemLabel="Scheduled"></apex:selectOption>
+                <apex:selectOption itemValue="Installed" itemLabel="Installed"></apex:selectOption>
+                <apex:selectOption itemValue="Completed" itemLabel="Completed"></apex:selectOption>
+                <apex:selectOption itemValue="On Hold" itemLabel="On Hold"></apex:selectOption>
+                <apex:selectOption itemValue="Cancelled" itemLabel="Cancelled"></apex:selectOption>
+                <apex:selectOption itemValue="Details Accepted" itemLabel="Details Accepted"></apex:selectOption>
+                <apex:selectOption itemValue="Details On Hold" itemLabel="Details On Hold"></apex:selectOption>
+                <apex:selectOption itemValue="Details Pending" itemLabel="Details Pending"></apex:selectOption>
+                <apex:selectOption itemValue="Details Declined" itemLabel="Details Declined"></apex:selectOption>
+                <apex:selectOption itemValue="Details Scheduled" itemLabel="Details Scheduled"></apex:selectOption>
+                <apex:selectOption itemValue="Details Conducted" itemLabel="Details Conducted"></apex:selectOption>
+                <apex:selectOption itemValue="Details Completed" itemLabel="Details Completed"></apex:selectOption>
+                <apex:selectOption itemValue="Details Lost" itemLabel="Details Lost"></apex:selectOption>
+                <apex:selectOption itemValue="Details Dead" itemLabel="Details Dead"></apex:selectOption>
+              </apex:selectList>
+            </div>
+          </div>
+        </div>
+        <!-- Stage Name Filter -->
+        
+        <!-- Search & Clear All Filters Button --> 
+        <div class="slds-col--padded">
+          <legend class="slds-form-element__label">&nbsp;</legend>
+          <apex:commandButton action="{!search}" reRender="css-search-table,css-search-message,css-search-pagination" styleClass="slds-button slds-button--brand" style="white-space:nowrap" value="Search" onclick="showSpinner('#css-search-spinner');" oncomplete="hideSpinner('#css-search-spinner');"></apex:commandButton>
+          <apex:commandButton action="{!clear}" reRender="css-search-table,css-search-message,css-search-pagination" styleClass="slds-button slds-button--neutral slds-m-left--small" style="white-space:nowrap" value="Clear" onclick="showSpinner('#css-search-spinner');" oncomplete="document.getElementById('{!$Component.listForm}').reset();hideSpinner('#css-search-spinner');"></apex:commandButton>
+        </div>
+        <!-- End Search & Clear All Filters Button -->
+
+      </div>
+    </apex:form>
+  </div>
+</apex:page>

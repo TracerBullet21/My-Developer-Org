@@ -1,0 +1,10 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" standardController="Account" extensions="CSS_DetailController">
+  <apex:composition template="css_wrapper">
+    <apex:define name="content"> 
+       
+      <c:CSSPageHeader title="{!Account.Name}" icon="/assets/icons/standard/account_60.png"></c:CSSPageHeader>
+      <c:CSSDetailSection title="Account Summary Information" recId="{!Id}" type="Account" set="Community_Account_Detail_Information"></c:CSSDetailSection>
+    
+    </apex:define>
+  </apex:composition>
+</apex:page>

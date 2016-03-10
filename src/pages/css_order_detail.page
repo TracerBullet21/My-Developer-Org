@@ -1,0 +1,39 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" standardController="Order__c" extensions="CSS_DetailController">
+  <apex:composition template="css_wrapper">
+    <apex:define name="content"> 
+
+      <!-- Page Header --> 
+      <c:CSSPageHeader title="{!Order__c.Name}" subtitle="Order Detail" icon="/assets/icons/standard/orders_60.png" breadcrumb="true"></c:CSSPageHeader>
+
+      <!-- Page Content --> 
+      <div class="slds-m-around--medium">
+
+        <!-- Detail and Related List Tab -->
+        <div class="slds-tabs--default">
+          <ul class="css-detail-page-nav slds-tabs--default__nav">
+            <li class="slds-tabs__item slds-text-heading--label {!IF(ISBLANK($CurrentPage.parameters.tab),'slds-active','')}"><a href="#" onclick="setDetailPageNav(this,'#detailsTab');">Details</a></li>
+            <li class="slds-tabs__item slds-text-heading--label {!IF($CurrentPage.parameters.tab=='related','slds-active','')}"><a href="#" onclick="setDetailPageNav(this, '#relatedTab');">Related</a></li>
+          </ul>
+
+          <!-- Details Tab -->
+          <div id="detailsTab" class="css-tab-content slds-tabs__content {!IF(ISBLANK($CurrentPage.parameters.tab),' slds-show','slds-hide')}">
+            <c:CSSDetailSection title="Order Detail Information" recId="{!Id}" type="Order__c" set="Community_Order_Detail_Information"></c:CSSDetailSection>
+            <c:CSSDetailSection title="Account Information" recId="{!Id}" type="Order__c" set="Community_Order_Account_Information"></c:CSSDetailSection>
+          </div>
+          <!-- End Details Tab -->
+
+          <!-- Related List Tab -->
+          <div id="relatedTab" class="css-tab-content slds-tabs__content {!IF($CurrentPage.parameters.tab=='related',' slds-show','slds-hide')} ">
+            <c:CSSOrderDetail orderNumber="{!Order__c.Order_Number__c}"></c:CSSOrderDetail>
+          </div>
+          <!-- End Related List Tab -->
+        
+        </div>
+        <!-- End Detail and Related List Tab -->
+
+      </div>
+      <!-- End Page Content -->  
+
+    </apex:define>
+  </apex:composition>
+</apex:page>

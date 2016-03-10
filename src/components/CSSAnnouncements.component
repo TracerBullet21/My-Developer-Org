@@ -1,0 +1,50 @@
+<apex:component controller="CSS_AnnouncementService"> 
+  <div class="slds-m-vertical--medium slds-p-around--small" style="border:1px solid #C4C6C9;">  
+
+    <!-- Customer Announcement Header-->
+    <div class="slds-p-around--medium" style="background-color:#EEEEEE;border-bottom:1px solid #C4C6C9;">
+      <p class="slds-text-align--left slds-text-heading--small" style="font-weight:500">Customer Announcements</p>
+    </div>
+
+    <!-- Customer Announcements -->
+    <div class="slds-p-left--medium slds-scrollable--y" style="max-height:300px;">
+      <apex:repeat value="{!Announcements}" var="announcement">
+        
+        <!-- Announcement Summary -->
+        <div class="slds-m-vertical--small">
+          <p class="slds-text-heading--label">
+            <apex:outputText value="{0,date,short}">
+              <apex:param value="{!announcement.Start_Date__c}" /> 
+            </apex:outputText>
+          </p>
+          <p style="font-weight:bold;"><apex:outputText value="{!announcement.Title__c}"></apex:outputText></p>
+          <p>{!announcement.Summary__c}
+            (<a href="#" data-toggle="modal" data-target="#css-announcements-{!announcement.id}">read more</a>)
+          </p>
+        </div>
+        <!-- End Announcement Summary -->
+
+        <!-- Modal Announcement Body -->
+        <div id="css-announcements-{!announcement.id}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <p class="modal-title" style="font-weight:bold;">{!announcement.Title__c}</p>
+              </div>
+              <div class="modal-body">
+                <p><apex:outputText value="{!announcement.Body__c}" escape="false" ></apex:outputText></p>
+              </div>
+              <div class="modal-footer">
+                <button class="slds-button slds-button--brand slds-m-left--small" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Modal Announcement Body -->
+
+      </apex:repeat>
+    </div>
+    
+  </div>
+</apex:component>

@@ -1,0 +1,83 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" standardController="Invoice__c" extensions="CSS_EditController">
+  <apex:composition template="css_wrapper">
+    <apex:define name="content"> 
+
+      <!-- Page Header --> 
+      <c:CSSPageHeader title="{!BLANKVALUE(Invoice__c.Name,'New Invoice')}" subtitle="Invoice Edit" icon="/assets/icons/standard/document_60.png"></c:CSSPageHeader>
+      
+      <!-- Error & Validation Messages -->
+      <apex:outputPanel id="css-page-messages">
+        <c:CSSPageMessages messages="{!pageMessages}"></c:CSSPageMessages>
+      </apex:outputPanel>
+
+      <!-- Input Form -->
+      <apex:outputPanel id="css-form">
+        <apex:form styleClass="slds-form--stacked" html-novalidate="true">
+
+          <!-- Invoice Number -->
+          <div class="slds-form-element slds-is-required">
+            <apex:outputLabel for="css-invoice-number" styleClass="slds-form-element__label">Contractor Invoice Number</apex:outputLabel>
+            <div class="slds-form-element__control">
+              <apex:inputText id="css-invoice-number" styleClass="slds-input" required="true" value="{!Invoice__c.Contractor_PO_Number__c}" />
+              <apex:message for="css-invoice-number" styleClass="slds-form-element__help css-component-message"/>
+            </div>
+          </div>
+
+          <!-- Invoice Amount -->
+          <div class="slds-form-element slds-is-required">
+            <apex:outputLabel for="css-invoice-amount" styleClass="slds-form-element__label">Invoice Amount</apex:outputLabel>
+            <div class="slds-form-element__control">
+              <apex:inputText id="css-invoice-amount" styleClass="slds-input" required="true" value="{!Invoice__c.Invoice_Amount__c}" />
+              <apex:message for="css-invoice-amount" styleClass="slds-form-element__help css-component-message"/>
+            </div>
+          </div>
+          
+          <div class="slds-form-element">
+              <apex:outputLabel for="css-invoice-status" styleClass="slds-form-element__label">Invoice Status</apex:outputLabel>
+              <div class="slds-form-element__control">
+                <apex:selectList id="css-invoice-status" styleClass="slds-select"  value="{!Invoice__c.Invoice_Status__c}" multiselect="false" size="1" >
+                  <apex:selectOption itemValue="Open" itemLabel="Open"></apex:selectOption>
+                  <apex:selectOption itemValue="Accepted" itemLabel="Accepted"></apex:selectOption>
+                  <apex:selectOption itemValue="Rejected" itemLabel="Rejected"></apex:selectOption>
+                  <apex:selectOption itemValue="Canceled" itemLabel="Canceled"></apex:selectOption>
+                </apex:selectList>
+                <apex:message for="css-invoice-status" styleClass="slds-form-element__help css-component-message" />
+              </div>
+            </div>
+
+          <!-- COC Form Indicator (has related validation) -->
+          <!-- *** Only Display for Record Type: Lowes_Job (012i00000011WNWAA2) *** -->
+          <apex:outputPanel layout="block" rendered="{!Invoice__c.RecordTypeId == '012i00000011WNWAA2'}">            
+            <div class="slds-form-element slds-m-vertical--medium">
+              <apex:outputLabel for="css-coc-checkbox" styleClass="slds-checkbox">
+                <apex:inputCheckBox id="css-coc-checkbox" value="{!Invoice__c.COC_Form_Submitted__c}" />
+                <span class="slds-checkbox--faux"></span>
+                <span class="slds-form-element__label" style="font-size:12px">COC Form Submitted</span>
+              </apex:outputLabel>
+              <apex:message for="css-coc-checkbox" styleClass="slds-form-element__help css-component-message"/>
+            </div>
+          </apex:outputPanel>
+          <!-- *** End Only Display for Record Type: Lowes_Job (012i00000011WNWAA2) *** -->
+          
+          <!-- Contractor Comments -->
+          <div class="slds-form-element">
+            <apex:outputLabel for="css-invoice-comments" styleClass="slds-form-element__label">Contractor Comments</apex:outputLabel>
+            <div class="slds-form-element__control">
+              <apex:inputTextArea id="css-invoice-comments" styleClass="slds-textarea" value="{!Invoice__c.Contractor_Comments__c}" />
+              <apex:message for="css-invoice-comments" styleClass="slds-form-element__help css-component-message"/>
+            </div>
+          </div>
+
+          <!-- Save and Cancel Buttons -->
+          <div class="slds-text-align--right slds-m-top--medium">
+            <apex:commandButton id="saveButton" action="{!save}" rerender="css-page-messages,css-form" styleClass="slds-button slds-button--brand" value="Save"></apex:commandButton>
+            <apex:commandButton id="cancelButton" action="{!cancel}" styleClass="slds-button slds-button--neutral slds-m-left--medium" value="Cancel" immediate="true"></apex:commandButton>
+          </div>
+            
+        </apex:form>
+      </apex:outputPanel>
+      <!-- End Input Form -->
+      
+    </apex:define>
+  </apex:composition>
+</apex:page>

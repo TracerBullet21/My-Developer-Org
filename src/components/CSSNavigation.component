@@ -1,0 +1,63 @@
+<apex:component >
+  <apex:includeScript value="{!URLFOR($Resource.CustomerSelfService, '/assets/scripts/navigation.js')}" />
+
+  <header> 
+    <div id="hdr-box" class="slds-grid slds-nowrap slds-container--center">
+      <div class="slds-col--padded slds-no-flex slds-align-middle">
+        <a class="css-tabs__link" href="{!$Site.Prefix}/css_home">
+          <img id="jm-logo" src="{!URLFOR($Resource.CustomerSelfService, '/assets/images/logo-johnsmanville-white.png')}" />
+        </a>
+      </div>
+      <div id="nav-box">
+        <div id="nav-upper">                        
+          <span class="user-name">{!$User.FirstName} {!$User.LastName}</span>
+          <div class="avatar-box"><img id="avatar-sm" src="{!URLFOR($Resource.SLDS092, '/assets/icons/standard/avatar_60.png')}" /></div>
+          <a class="logout-link" href="{!$Site.Prefix}/secur/logout.jsp">Logout&nbsp;&raquo;</a>
+        </div>
+        <div id="nav-lower" class="slds-col--padded slds-align-bottom"></div>
+        <div id="nav-mobile">
+          <div class="slds-grid slds-grid--align-spread slds-p-vertical--small">
+            <div class="slds-col slds-align-middle">
+              <a href="#" id="btn-toggle-nav">
+                <span>&nbsp;</span>
+                <span>&nbsp;</span>
+                <span>&nbsp;</span>
+              </a>
+            </div>
+            <div class="slds-col slds-p-horizontal--medium slds-align-middle">
+              <a class="css-tabs__link" href="{!$Site.Prefix}/css_home">
+                <img src="{!URLFOR($Resource.CustomerSelfService, '/assets/images/logo-johnsmanville-white.png')}" style="height:62px;width:90px;min-width:90px;" />
+              </a>
+            </div>
+            <div class="slds-col slds-align-middle slds-text-heading--large">
+              <a class="logout-link" style="margin:28px 20px 0 0;text-decoration:none;" href="{!$Site.Prefix}/secur/logout.jsp">Logout&nbsp;</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <nav>
+    <div id="nav-inner">
+      <div class="css-tabs--default">
+        <ul id="css-navigation-list" class="css-tabs--default__nav slds-grid slds-nowrap">
+          <li id="css-tab-home" class="css-tabs__item slds-col slds-grow-none">
+            <a class="css-tabs__link" href="{!$Site.Prefix}/css_home">HOME</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- JavaScript controller logic for global navigation -->
+  <script>
+    j$(document).ready(function() {
+      showTab({!$Permission.CSS_View_Orders_Tab},'css-tab-order','Order__c','ORDERS','{!$Site.Prefix}');
+      showTab({!$Permission.CSS_View_Invoices_Tab},'css-tab-invoice','SAP_Invoice__c','INVOICES','{!$Site.Prefix}');
+      showTab({!$Permission.CSS_View_Opportunities_Tab},'css-tab-opportunity','Opportunity','OPPORTUNITIES','{!$Site.Prefix}');
+      showTab({!$Permission.CSS_View_Cases_Tab},'css-tab-case','Case','CASES','{!$Site.Prefix}');
+      setCurrentTab('{!$CurrentPage.name}','{!$CurrentPage.parameters.type}');
+      setNavigation();
+    });
+  </script>
+</apex:component>

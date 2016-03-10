@@ -1,0 +1,190 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" standardController="Opportunity" extensions="CSS_EditController">
+  <apex:composition template="css_wrapper">
+    <apex:define name="header">
+      <apex:includeScript value="{!URLFOR($Resource.CustomerSelfService, '/assets/libraries/datepicker/datepicker.min.js')}" />
+      <apex:includeScript value="{!URLFOR($Resource.CustomerSelfService, '/assets/scripts/datepicker.js')}" />
+      <apex:stylesheet value="{!URLFOR($Resource.CustomerSelfService, '/assets/libraries/datepicker/datepicker.min.css')}" />
+    </apex:define>
+    <apex:define name="content"> 
+
+      <!-- Page Header -->  
+      <apex:outputPanel layout="none" rendered="{!Opportunity.Id != null}">
+        <c:CSSPageHeader title="{!Opportunity.Name}" icon="/assets/icons/standard/opportunity_60.png"></c:CSSPageHeader>
+      </apex:outputPanel>
+
+      <apex:outputPanel layout="none" rendered="{!Opportunity.Id != null}">
+        <c:CSSPageHeader title="{!Opportunity.Name}" icon="/assets/icons/standard/opportunity_60.png"></c:CSSPageHeader>
+      </apex:outputPanel>
+
+      <!-- Error & Validation Messages -->
+      <apex:outputPanel id="css-page-messages">
+        <c:CSSPageMessages messages="{!pageMessages}"></c:CSSPageMessages>
+      </apex:outputPanel>
+
+      <!-- Input Form -->
+      <apex:outputPanel id="css-form">
+        <apex:form styleClass="slds-form--stacked" html-novalidate="true">
+
+          <!-- Display Record Type: Lowes_Jobs (012i00000011WNiAAM) -->
+          <apex:outputPanel layout="block" rendered="{!Opportunity.RecordType.DeveloperName == 'Lowes_Jobs'}">
+              
+            <!-- Opportunity Stage for Lowe's Jobs -->
+            <div class="slds-form-element">
+              <apex:outputLabel for="css-job-stage" styleClass="slds-form-element__label">Stage</apex:outputLabel>
+              <div class="slds-form-element__control">
+                <apex:selectList id="css-job-stage" styleClass="slds-select" value="{!opportunity.StageName}" multiselect="false" size="1">
+                  <apex:selectOption itemValue="Pending" itemLabel="Pending"></apex:selectOption>
+                  <apex:selectOption itemValue="Accepted" itemLabel="Accepted"></apex:selectOption>
+                  <apex:selectOption itemValue="Declined" itemLabel="Declined"></apex:selectOption>
+                  <apex:selectOption itemValue="Scheduled" itemLabel="Scheduled"></apex:selectOption> 
+                  <apex:selectOption itemValue="Installed" itemLabel="Installed"></apex:selectOption>
+                  <apex:selectOption itemValue="Completed" itemLabel="Completed"></apex:selectOption>
+                  <apex:selectOption itemValue="On Hold" itemLabel="On Hold"></apex:selectOption>
+                  <apex:selectOption itemValue="Cancelled" itemLabel="Cancelled"></apex:selectOption>
+                </apex:selectList>
+                <apex:message for="css-job-stage" styleClass="slds-form-element__help css-component-message" />
+              </div>
+            </div>
+            
+           <!-- Opportunity Stage Reason for Lowe's Jobs -->
+            <div class="slds-form-element">
+              <apex:outputLabel for="css-job-stage-reason" styleClass="slds-form-element__label">Stage Reason</apex:outputLabel>
+              <div class="slds-form-element__control">
+                <apex:selectList id="css-job-stage-reason" styleClass="slds-select" value="{!opportunity.Stage_Reason__c}" multiselect="false" size="1">
+                  <apex:selectOption itemValue="" itemLabel=""></apex:selectOption>
+                  <apex:selectOption itemValue="Customer Request" itemLabel="Customer Request"></apex:selectOption>
+                  <apex:selectOption itemValue="Change Order" itemLabel="Change Order"></apex:selectOption>
+                  <apex:selectOption itemValue="Unable to Contact" itemLabel="Unable to Contact"></apex:selectOption>
+                  <apex:selectOption itemValue="Incomplete paperwork" itemLabel="Incomplete paperwork"></apex:selectOption> 
+                  <apex:selectOption itemValue="Mileage" itemLabel="Mileage"></apex:selectOption>
+                  <apex:selectOption itemValue="Out of Scope" itemLabel="Out of Scope"></apex:selectOption>
+                  <apex:selectOption itemValue="Scheduling Conflict" itemLabel="Scheduling Conflict"></apex:selectOption>
+                </apex:selectList>
+                <apex:message for="css-job-stage-reason" styleClass="slds-form-element__help css-component-message" />
+              </div>
+            </div>
+
+            <!-- Scheduled Install Date for Lowe's Jobs -->
+            <div class="slds-form-element">
+              <apex:outputLabel for="css-scheduled-install-date" styleClass="slds-form-element__label">Scheduled Install Date</apex:outputLabel>
+              <div class="slds-form-element__control">
+                <apex:inputField id="css-scheduled-install-date" styleClass="slds-input css-datepicker" type="text" showDatePicker="false" value="{!Opportunity.Scheduled_Install_Date__c}" />
+                <apex:message for="css-scheduled-install-date" styleClass="slds-form-element__help css-component-message" />
+              </div>
+            </div>
+
+            <!-- Scheduled Install Time Window for Lowe's Jobs -->
+            <div class="slds-form-element">
+              <apex:outputLabel for="css-install-time" styleClass="slds-form-element__label">Scheduled Install Time Window</apex:outputLabel>
+              <div class="slds-form-element__control">
+                <apex:selectList id="css-install-time" styleClass="slds-select" value="{!opportunity.Scheduled_Install_Time_Window__c}" multiselect="false" size="1" >
+                  <apex:selectOption itemValue="8am - 10am" itemLabel="8am - 10am"></apex:selectOption>
+                  <apex:selectOption itemValue="10am - 12pm" itemLabel="10am - 12pm"></apex:selectOption>
+                  <apex:selectOption itemValue="12pm - 2pm" itemLabel="12pm - 2pm"></apex:selectOption>
+                  <apex:selectOption itemValue="2pm - 5pm" itemLabel="2pm - 5pm"></apex:selectOption>
+                </apex:selectList>
+                <apex:message for="css-install-time" styleClass="slds-form-element__help css-component-message" />
+
+              </div>
+            </div>
+
+            <!-- Actual Install Date for Lowe's Jobs -->
+            <div class="slds-form-element">
+              <apex:outputLabel for="css-actual-install-date" styleClass="slds-form-element__label">Actual Install Date</apex:outputLabel>
+              <div class="slds-form-element__control">
+                <apex:inputField id="css-actual-install-date" styleClass="slds-input css-datepicker" type="text" showDatePicker="false" value="{!Opportunity.Actual_Install_Date__c}" />
+                <apex:message for="css-actual-install-date" styleClass="slds-form-element__help css-component-message" />
+              </div>
+            </div>
+
+          </apex:outputPanel>
+          <!-- End Display Record Type: Lowes_Jobs (012i00000011WNiAAM) -->
+          
+          <!-- Display Record Type: Lowes_Detail (012i00000011WNhAAM) -->
+          <apex:outputPanel layout="block" id="messagePanel2"  rendered="{!Opportunity.RecordType.DeveloperName == 'Lowes_Detail'}">
+
+            <!-- Opportunity Stage for Lowe's Detail -->
+            <div class="slds-form-element">
+              <apex:outputLabel for="css-detail-stage" styleClass="slds-form-element__label">Stage</apex:outputLabel>
+              <div class="slds-form-element__control">
+                <apex:selectList id="css-detail-stage" styleClass="slds-select" value="{!opportunity.StageName}" multiselect="false" size="1">
+                  <apex:selectOption itemValue="Details On Hold" itemLabel="Details On Hold"></apex:selectOption>
+                  <apex:selectOption itemValue="Details Pending" itemLabel="Details Pending"></apex:selectOption>
+                  <apex:selectOption itemValue="Details Accepted" itemLabel="Details Accepted"></apex:selectOption>
+                  <apex:selectOption itemValue="Details Declined" itemLabel="Details Declined"></apex:selectOption>
+                  <apex:selectOption itemValue="Details Scheduled" itemLabel="Details Scheduled"></apex:selectOption>
+                  <apex:selectOption itemValue="Details Conducted" itemLabel="Details Conducted"></apex:selectOption>
+                  <apex:selectOption itemValue="Details Completed" itemLabel="Details Completed"></apex:selectOption>
+                  <apex:selectOption itemValue="Details Lost" itemLabel="Details Lost"></apex:selectOption>
+                  <apex:selectOption itemValue="Details Dead" itemLabel="Details Dead"></apex:selectOption>
+                </apex:selectList>
+                <apex:message for="css-detail-stage" styleClass="slds-form-element__help css-component-message" />
+              </div>
+            </div>
+            
+           <!-- Opportunity Stage Reason for Lowe's Detailss -->
+            <div class="slds-form-element">
+              <apex:outputLabel for="css-job-stage-reasons" styleClass="slds-form-element__label">Stage Reason</apex:outputLabel>
+              <div class="slds-form-element__control">
+                <apex:selectList id="css-job-stage-reasons" styleClass="slds-select" value="{!opportunity.Stage_Reason__c}" multiselect="false" size="1">
+                  <apex:selectOption itemValue="" itemLabel=""></apex:selectOption>
+                  <apex:selectOption itemValue="Customer Request" itemLabel="Customer Request"></apex:selectOption>
+                  <apex:selectOption itemValue="Change Order" itemLabel="Change Order"></apex:selectOption>
+                  <apex:selectOption itemValue="Unable to Contact" itemLabel="Unable to Contact"></apex:selectOption>
+                  <apex:selectOption itemValue="Incomplete paperwork" itemLabel="Incomplete paperwork"></apex:selectOption> 
+                  <apex:selectOption itemValue="Mileage" itemLabel="Mileage"></apex:selectOption>
+                  <apex:selectOption itemValue="Out of Scope" itemLabel="Out of Scope"></apex:selectOption>
+                  <apex:selectOption itemValue="Scheduling Conflict" itemLabel="Scheduling Conflict"></apex:selectOption>
+                </apex:selectList>
+                <apex:message for="css-job-stage-reasons" styleClass="slds-form-element__help css-component-message" />
+              </div>
+            </div>
+
+            <!-- Scheduled Detail Date for Lowe's Detail -->
+            <div class="slds-form-element">
+              <apex:outputLabel for="css-scheduled-detail-date" styleClass="slds-form-element__label">Scheduled Detail Date</apex:outputLabel>
+              <div class="slds-form-element__control">
+                <apex:inputField id="css-scheduled-detail-date" styleClass="slds-input css-datepicker" type="text" showDatePicker="false" value="{!Opportunity.Scheduled_Detail_Date__c}" />
+                <apex:message for="css-scheduled-detail-date" styleClass="slds-form-element__help css-component-message" />
+              </div>
+            </div>
+
+            <!-- Scheduled Detail Time Window for Lowe's Detail -->
+            <div class="slds-form-element">
+              <apex:outputLabel for="css-detail-time" styleClass="slds-form-element__label">Scheduled Detail Time Window</apex:outputLabel>
+              <div class="slds-form-element__control">
+                <apex:selectList id="css-detail-time" styleClass="slds-select"  value="{!opportunity.Scheduled_Detail_Time_Window__c}" multiselect="false" size="1" >
+                  <apex:selectOption itemValue="8am - 10am" itemLabel="8am - 10am"></apex:selectOption>
+                  <apex:selectOption itemValue="10am - 12pm" itemLabel="10am - 12pm"></apex:selectOption>
+                  <apex:selectOption itemValue="12pm - 2pm" itemLabel="12pm - 2pm"></apex:selectOption>
+                  <apex:selectOption itemValue="2pm - 5pm" itemLabel="2pm - 5pm"></apex:selectOption>
+                </apex:selectList>
+                <apex:message for="css-detail-time" styleClass="slds-form-element__help css-component-message" />
+              </div>
+            </div>
+
+            <!-- Actual Detail Date for Lowe's Jobs -->
+            <div class="slds-form-element">
+              <apex:outputLabel for="css-actual-detail-date" styleClass="slds-form-element__label">Actual Detail Conducted Date</apex:outputLabel>
+              <div class="slds-form-element__control">
+                <apex:inputField id="css-actual-detail-date" styleClass="slds-input css-datepicker" type="text" showDatePicker="false" value="{!Opportunity.Actual_Detail_Conducted_Date__c}" />
+                <apex:message for="css-actual-detail-date" styleClass="slds-form-element__help css-component-message" />
+              </div>
+            </div>
+
+          </apex:outputPanel> 
+          <!-- Display Record Type: Lowes_Detail (012i00000011WNhAAM) -->
+
+          <!-- Save and Cancel Buttons -->
+          <div class="slds-text-align--right slds-m-top--medium">
+            <apex:commandButton id="saveButton" action="{!save}" rerender="css-page-messages,css-form" styleClass="slds-button slds-button--brand" value="Save" oncomplete="initializeDatePickers();"></apex:commandButton>
+            <apex:commandButton id="cancelButton" action="{!cancel}" styleClass="slds-button slds-button--neutral slds-m-left--medium" value="Cancel"></apex:commandButton>
+          </div>
+            
+        </apex:form>
+      </apex:outputPanel>
+      <!-- End Input Form -->
+           
+    </apex:define>
+  </apex:composition>
+</apex:page>

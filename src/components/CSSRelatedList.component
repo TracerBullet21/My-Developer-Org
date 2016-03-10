@@ -1,0 +1,96 @@
+<apex:component controller="CSS_RelatedListController" allowDML="true">
+  <apex:attribute name="title" description="Related list heading" type="String" required="true"/>
+  <apex:attribute name="icon" description="Related list icon" type="String" required="true"/>
+  <apex:attribute name="recId" description="Record id of parent record" type="Id" required="true" assignTo="{!parentId}"/>
+  <apex:attribute name="relationship" description="Field name of parent lookup field" type="String" required="true" assignTo="{!parentField}"/>
+  <apex:attribute name="type" description="Object" type="String" required="true" assignTo="{!objectType}"/>
+  <apex:attribute name="set" description="Field Set" type="String" required="true" assignTo="{!fieldSetName}"/>
+  <apex:attribute name="retURL" description="Return url (i.e., where to go after an operation)" type="String"/>
+  <apex:attribute name="enableEdit" description="Set to true if edit links should be displayed" type="Boolean" default="false" required="false"/>
+  <apex:attribute name="enableDelete" description="Set to true if delete links should be displayed" type="Boolean" default="false" required="false"/>
+  <apex:attribute name="community" description="Determines the community to send the user for edit" type="String" default="false" required="false" assignTo="{!communityName}"/>
+  
+  <div class="slds-p-vertical--small">
+    <apex:outputPanel layout="block" styleClass="slds-card">
+      
+      <!-- Related List Header -->
+      <div class="slds-card__header slds-grid">
+        <div class="slds-media slds-media--center slds-has-flexi-truncate">
+          <div class="slds-media__figure">
+            <img class="slds-icon slds-icon--small" src="{!URLFOR($Resource.SLDS092, icon)}" alt="" style="background-color:#006BB7" />
+          </div>
+          <div class="slds-media__body">
+            <h2 class="slds-text-heading--small slds-truncate">{!title}</h2> 
+          </div>
+        </div>
+        <div class="slds-no-flex">
+          <div class="slds-button-group">
+            <apex:componentBody /><!-- let other pages define button group -->
+          </div>
+        </div>
+      </div>
+      <!-- End Related List Header -->
+
+      <!-- Related List Body -->
+      <apex:outputPanel id="css-related-list-form" styleClass="slds-card__body">
+
+        <!-- Page Messages (delete errors) -->
+        <apex:repeat value="{!PageMessages}" var="message">
+          <div class="slds-text-align--center slds-m-bottom--xx-small">
+            <apex:outputText escape="false" value="{!message.summary}"></apex:outputText><br />
+          </div>
+        </apex:repeat>
+        <!-- End Page Messages (delete errors) -->
+
+        <!-- Loading Spinner -->
+        <div class="slds-grid slds-grid--align-center slds-m-bottom--xx-small">
+          <div id="css-related-list-spinner-{!relationship}" class="slds-spinner--small slds-m-right--medium" style="display: none;">
+            <img src="{!URLFOR($Resource.SLDS092, '/assets/images/spinners/slds_spinner_brand.gif')}" alt="Loading..." />
+          </div>
+        </div>
+        <!-- End Loading Spinner -->
+        
+        <apex:form >
+          <table class="slds-table slds-table--bordered slds-table--striped slds-max-medium-table--stacked-horizontal slds-no-row-hover">
+            <thead>
+              <tr class="slds-text-heading--label">
+                <th style="{!IF(OR(enableEdit,enableDelete),'','display:none;')}">
+                  <span style="white-space:nowrap;">Action</span>
+                </th>
+                <apex:repeat value="{!fieldSet.fields}" var="field">
+                  <th>
+                    <span style="white-space:normal;">{!field.Label}</span>
+                  </th>
+                </apex:repeat>
+              </tr>
+            </thead> 
+            <tbody>
+              <apex:repeat value="{!records}" var="record">
+                <tr class="slds-hint-parent">
+                  <td data-label="Action" style="{!IF(OR(enableEdit,enableDelete),'','display:none;')}">
+                    <apex:outputLink rendered="{!enableEdit}" value="{!EditPageURL}?id={!record.Id}&retURL={!retURL}">Edit</apex:outputLink>
+                    <apex:outputPanel rendered="{!AND(enableEdit,enableDelete)}" layout="inline" >&nbsp;|&nbsp;</apex:outputPanel>
+                    <apex:commandLink rendered="{!enableDelete}" action="{!deleteRecord}" reRender="css-related-list-form" value="Del" onclick="showSpinner('#css-related-list-spinner-{!relationship}');" oncomplete="hideSpinner('#css-related-list-spinner-{!relationship}');">
+                      <apex:param name="record" value="{!record.id}" assignTo="{!recordId}"/>
+                    </apex:commandLink>
+                  </td>
+                  <apex:repeat value="{!fieldSet.fields}" var="field">  
+                    <td data-label="{!field.label}" style="white-space:normal">
+                      <apex:outputField value="{!record[field.name]}"/>
+                    </td>
+                  </apex:repeat>
+                </tr>
+              </apex:repeat>
+            </tbody>
+          </table>
+        </apex:form>
+      </apex:outputPanel>
+      <!-- End Related List Body -->
+      
+      <!-- Table Footer -->
+      <div class="slds-card__footer">&nbsp;</div>
+      <!-- End Table Footer -->
+      
+    </apex:outputPanel>
+  </div>
+</apex:component>

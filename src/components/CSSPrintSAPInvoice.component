@@ -1,0 +1,11 @@
+<apex:component controller="CSS_SAPInvoiceDocumentService" >
+  <apex:attribute name="invoiceId" description="The Saleforce Invoice Identifier" type="String" required="true" />
+  <apex:attribute name="invoiceNumber" description="The SAP Invoice Identifier" type="String" required="true" />
+  
+  <!-- Invoice print button and leading spinner -->
+  <button id="css-print-invoice-button" class="slds-button slds-button--neutral" onclick="printInvoice('{!$Site.Prefix}','{!invoiceId}','{!invoiceNumber}','{!URLFOR($Resource.SLDS092, '/assets')}');">Print Invoice</button>
+  <div id="css-print-invoice-spinner" class="slds-spinner--small slds-m-right--medium" style="display: none;"><img src="{!URLFOR($Resource.SLDS092, '/assets/images/spinners/slds_spinner_brand.gif')}" alt="Loading..." /></div>  
+  
+  <!-- JavaScript controller logic for invoice printing -->
+  <apex:includeScript value="{!URLFOR($Resource.CustomerSelfService, '/assets/scripts/print-invoice.js')}" />
+</apex:component>

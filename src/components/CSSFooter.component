@@ -1,0 +1,31 @@
+<apex:component >
+  <footer class="slds-p-vertical--large slds-p-horizontal--medium" style="background-color:#006BB7">
+    <div class="slds-container--center" style="min-width:320px;max-width:1360px;">
+      <div class="slds-media slds-media--responsive">
+        <div class="slds-media__figure">
+          <img src="{!URLFOR($Resource.CustomerSelfService, '/assets/images/logo-johnsmanville-white.png')}" width="64" />
+        </div>
+        <div class="slds-media__body">
+          <div class="slds-grid slds-nowrap">
+            <div class="slds-col">
+              <p style="color:white;">&#169; 2016 Johns Manville. A Berkshire Hathaway Company</p>
+            </div>
+            <div class="slds-col slds-text-align--right">
+              <p style="color:white;">
+                <span class="slds-m-horizontal--xx-small"><a style="color:white;" target="_blank" href="http://www.jm.com">JM.COM</a></span> | 
+                <span class="slds-m-horizontal--xx-small"><a style="color:white;" target="_blank" href="http://www.jm.com/en/contact/">CONTACT US</a></span> 
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slds-m-top--large">
+        <p style="color:white;">
+          <span class="slds-m-horizontal--xx-small"><a style="color:white;" href="http://www.jm.com/en/privacy-policy/" target="_blank">Privacy Policy</a></span> | 
+          <span class="slds-m-horizontal--xx-small"><a style="color:white;" href="http://www.jm.com/en/legal/" target="_blank">Legal</a></span> |
+          <span class="slds-m-horizontal--xx-small"><a style="color:white;" target="_blank" href="http://www.jm.com/content/dam/jm/global/en/general-documents/Terms/JMConnexus_Terms_Conditions.pdf">Terms and Conditions</a></span>
+        </p>
+      </div>
+    </div>
+  </footer>
+</apex:component>

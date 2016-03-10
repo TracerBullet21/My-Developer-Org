@@ -1,0 +1,116 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" standardController="Attachment_JM_Obj__c" extensions="CSS_EditAttachmentController">
+  <apex:composition template="css_wrapper">
+    <apex:define name="content"> 
+
+      <!-- Page Header --> 
+      <c:CSSPageHeader title="New Attachment" icon="/assets/icons/standard/note_60.png"></c:CSSPageHeader>
+
+      <!-- Error & Validation Messages -->
+      <apex:outputPanel id="css-page-messages">
+        <c:CSSPageMessages messages="{!pageMessages}"></c:CSSPageMessages>
+      </apex:outputPanel>
+
+      <!-- Input Form -->
+      <apex:outputPanel id="css-form">
+        
+        <!-- Form for Notes (*** only display for edit type notes ***) -->  
+        <apex:outputPanel layout="block" rendered="{!Attachment_JM_Obj__c.Type__c == 'Note'}">            
+          <apex:form styleClass="slds-form--stacked" html-novalidate="true">
+            <apex:inputHidden id="communityAbbrev" value="{!communityAbbreviation}" /> 
+
+            <!-- Note Title -->
+            <div class="slds-form-element slds-is-required">
+              <apex:outputLabel for="css-note-title" styleClass="slds-form-element__label">Title</apex:outputLabel>
+              <div class="slds-form-element__control">
+                <apex:inputText id="css-note-title" styleClass="slds-input" required="true" value="{!Attachment_JM_Obj__c.Title__c}" />
+                <apex:message for="css-note-title" styleClass="slds-form-element__help css-component-message"/>
+              </div>
+            </div>
+          
+            <!-- Note Body -->
+            <div class="slds-form-element">
+              <apex:outputLabel for="css-note-body" styleClass="slds-form-element__label">Body</apex:outputLabel>
+              <div class="slds-form-element__control">
+                <apex:inputTextArea id="css-note-body" styleClass="slds-textarea" required="false" value="{!Attachment_JM_Obj__c.Body__c}" />
+                <apex:message for="css-note-body" styleClass="slds-form-element__help css-component-message"/>
+              </div>
+            </div>
+
+            <!-- Save and Cancel Buttons -->
+            <div class="slds-text-align--right slds-m-top--medium">
+              <apex:commandButton id="saveButton" action="{!save}" rerender="css-page-messages,css-form" styleClass="slds-button slds-button--brand" value="Save"></apex:commandButton>
+              <apex:commandButton id="cancelButton" action="{!doCancel}" styleClass="slds-button slds-button--neutral slds-m-left--medium" value="Cancel"></apex:commandButton>
+            </div>
+
+          </apex:form>
+        </apex:outputPanel>   
+        <!-- Form for Notes (*** only display for edit type notes ***) -->  
+
+        <!-- Form for Attachments (*** only display for type attachments ***) -->
+        <apex:outputPanel layout="block" rendered="{!Attachment_JM_Obj__c.Type__c <> 'Note'}">           
+          <apex:form styleClass="slds-form--stacked" html-novalidate="true">
+
+            <!-- Attachment Title -->
+            <div class="slds-form-element slds-is-required">
+              <apex:outputLabel for="css-attachment-title" styleClass="slds-form-element__label">Title</apex:outputLabel>
+              <div class="slds-form-element__control">
+                <apex:inputText id="css-attachment-title" styleClass="slds-input" required="true" value="{!Attachment_JM_Obj__c.Title__c}" />
+                <apex:message for="css-attachment-title" styleClass="slds-form-element__help css-component-message"/>
+              </div>
+            </div>
+
+            <!-- Attachment Type -->
+            <div class="slds-form-element">
+              <apex:outputLabel for="css-attachment-type" styleClass="slds-form-element__label">Type</apex:outputLabel>
+              <div class="slds-form-element__control">
+                <apex:selectList id="css-attachment-type" styleClass="slds-select" value="{!Attachment_JM_Obj__c.Type__c}" multiselect="false" size="1">
+                  <apex:selectOption itemValue="Scope of Work" itemLabel="Scope of Work"></apex:selectOption>
+                  <apex:selectOption itemValue="JM PO" itemLabel="JM PO"></apex:selectOption>
+                  <apex:selectOption itemValue="JM Detail PO" itemLabel="JM Detail PO"></apex:selectOption>
+                  <apex:selectOption itemValue="WorkOrder" itemLabel="WorkOrder"></apex:selectOption>
+                  <apex:selectOption itemValue="COC" itemLabel="COC"></apex:selectOption>
+                  <apex:selectOption itemValue="Combustion Safety Checklist" itemLabel="Combustion Safety Checklist"></apex:selectOption>
+                  <apex:selectOption itemValue="Invoice" itemLabel="Invoice"></apex:selectOption>
+                  <apex:selectOption itemValue="Misc." itemLabel="Misc."></apex:selectOption>
+                </apex:selectList>
+                <apex:message for="css-attachment-type" styleClass="slds-form-element__help css-component-message"/>
+              </div>
+            </div>
+          
+            <!-- Attachment Description -->
+            <div class="slds-form-element">
+              <apex:outputLabel for="css-attachment-description" styleClass="slds-form-element__label">Description</apex:outputLabel>
+              <div class="slds-form-element__control">
+                <apex:inputTextArea id="css-attachment-description" styleClass="slds-textarea" value="{!Attachment_JM_Obj__c.Description_JM_F__c}" />
+                <apex:message for="css-attachment-description" styleClass="slds-form-element__help css-component-message"/>
+              </div>
+            </div>
+              
+            <!-- Attachment/File -->
+            <div class="slds-form-element slds-is-required">
+              <apex:outputLabel for="css-attachment-file" styleClass="slds-form-element__label">File {!IF(ISBLANK(attachment.name),'',' (' + attachment.name + ')')}</apex:outputLabel>
+              <apex:inputFile id="css-attachment-file" styleClass="slds-input" value="{!attachment.body}" filename="{!attachment.name}" required="true" />
+              <apex:message for="css-attachment-file" styleClass="slds-form-element__help css-component-message"/>
+            </div>
+
+            <!-- Save and Cancel Buttons (file uploads cannot use rerender) -->
+            <div class="slds-text-align--right slds-m-top--medium">
+              <apex:commandButton action="{!saveAttachment}" styleClass="slds-button slds-button--brand" value="Save"></apex:commandButton>
+              <apex:commandButton id="cancelButton" action="{!doCancel}" styleClass="slds-button slds-button--neutral slds-m-left--medium" value="Cancel"></apex:commandButton>
+            </div>
+          </apex:form>   
+        </apex:outputPanel>
+        <!-- End Form for Attachments (*** only display for type attachments ***) -->       
+
+      </apex:outputPanel>
+      <!-- End Input Form -->
+
+    </apex:define>
+  </apex:composition>
+  <script type="text/javascript">
+    j$(document).ready(function(){
+      j$ = jQuery.noConflict();
+      j$('input[id$="communityAbbrev"]').val('ac');
+    });
+  </script>
+</apex:page>

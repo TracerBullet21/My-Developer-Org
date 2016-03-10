@@ -1,0 +1,61 @@
+<apex:component controller="CSS_OrderDetailService" >
+  <apex:attribute name="orderNumber" description="Unique SAP order number" type="String" required="true"/>
+
+  <!-- Order Line Items -->    
+  <div>
+    <div>
+      <div class="slds-card slds-scrollable--x">
+        <div class="slds-card__header slds-grid">
+          <div class="slds-media slds-media--center slds-has-flexi-truncate">
+            <div class="slds-media__figure">
+              <img class="slds-icon slds-icon--small" src="{!URLFOR($Resource.SLDS092, '/assets/icons/standard/record_60.png')}" alt="" style="background-color:#006BB7" />
+            </div>
+            <div class="slds-media__body">
+              <h2 class="slds-text-heading--small slds-truncate">Order Line Items</h2>
+            </div>
+          </div>
+        </div>
+        <div class="slds-card__body">
+          <table class="slds-table slds-table--bordered slds-max-medium-table--stacked-horizontal slds-no-row-hover slds-table--striped">
+            <thead>
+              <tr class="slds-text-heading--label">
+                <th><span style="white-space:normal">Material</span></th>
+                <th><span style="white-space:normal">Material Description</span></th> 
+                <th><span style="white-space:normal">Requested Delivery Date</span></th>    
+                <th><span style="white-space:normal">Confirmed Delivery Date*</span></th>
+                <th><span style="white-space:normal">Order Quantity</span></th>
+                <th><span style="white-space:normal">Order UOM</span></th>
+                <th><span style="white-space:nowrap">Invoice #</span></th>
+                <th><span style="white-space:normal">Credit <span style="white-space:nowrap">Memo #</span></span></th>
+                <th><span style="white-space:normal">Debit <span style="white-space:nowrap">Memo #</span></span></th>
+              </tr>
+            </thead>
+            <tbody id="css-order-detail-body">
+              <tr>
+                <td colspan="7">
+                 <div class="slds-grid slds-grid--align-center">
+                    <div id="css-order-detail-spinner" class="slds-spinner--medium slds-col">
+                      <img src="{!URLFOR($Resource.SLDS092, '/assets/images/spinners/slds_spinner.gif')}" alt="Loading..." />
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="slds-card__footer">
+          <div class="slds-text-body--small">*Actual delivery date will be confirmed in your order confirmation.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Order Line Items -->   
+   
+  <!-- JavaScript controller logic for order line item details -->
+  <apex:includeScript value="{!URLFOR($Resource.CustomerSelfService, '/assets/scripts/line-item-details.js')}" />
+  <script>
+    j$(document).ready(function() {
+      displayOrderDetails('{!orderNumber}');
+    });
+  </script>
+</apex:component>

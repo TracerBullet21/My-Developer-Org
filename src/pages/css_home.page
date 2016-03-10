@@ -1,0 +1,31 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+  <apex:composition template="css_wrapper">
+    <apex:define name="content">
+
+      <!-- Two Column Layout -->
+      <div class="slds-grid slds-wrap">
+        
+        <!-- Left Panel Layout -->
+        <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-3 slds-large-size--1-of-3">
+          <div class="css-m-right--x-small">
+            <c:CSSLikeToDoToday ></c:CSSLikeToDoToday>
+            <c:CSSGetHelp ></c:CSSGetHelp>
+          </div>
+        </div>
+        <!-- End Left Panel Layout -->
+
+        <!-- Right Panel Layout -->
+        <div class="slds-col slds-size--1-of-1 slds-medium-size--2-of-3 slds-large-size--2-of-3">
+          <div class="slds-medium-show">
+            <c:CSSCarousel ></c:CSSCarousel>
+          </div>
+          <c:CSSAnnouncements ></c:CSSAnnouncements>
+        </div>
+        <!-- End Right Panel Layout -->
+
+      </div>
+      <!-- End Two Column Layout -->
+
+    </apex:define>
+  </apex:composition>
+</apex:page>

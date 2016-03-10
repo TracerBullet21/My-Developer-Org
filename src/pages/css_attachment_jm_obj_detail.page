@@ -1,0 +1,10 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" standardController="Attachment_JM_Obj__c" extensions="CSS_DetailController">
+  <apex:composition template="css_wrapper">
+    <apex:define name="content"> 
+       
+      <c:CSSPageHeader title="{!Attachment_JM_Obj__c.Name}" icon="/assets/icons/standard/document_60.png"></c:CSSPageHeader>
+      <c:CSSDetailSection title="Note" recId="{!Id}" type="Attachment_JM_Obj__c" set="Community_Attachment_Note_List_Detail"></c:CSSDetailSection>
+    
+    </apex:define>
+  </apex:composition>
+</apex:page>

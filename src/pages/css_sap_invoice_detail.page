@@ -1,0 +1,42 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" standardController="SAP_Invoice__c" extensions="CSS_DetailController">
+  <apex:composition template="css_wrapper">
+    <apex:define name="content"> 
+
+      <!-- Page Header --> 
+      <c:CSSPageHeader title="{!SAP_Invoice__c.Name}" subtitle="Invoice Detail" icon="/assets/icons/standard/document_60.png" breadcrumb="true">
+        <div class="slds-button-group" role="group">
+          <c:CSSPrintSAPInvoice invoiceId="{!SAP_Invoice__c.Id}" invoiceNumber="{!SAP_Invoice__c.Name}"></c:CSSPrintSAPInvoice> 
+        </div>
+      </c:CSSPageHeader>
+
+      <!-- Page Content -->
+      <div class="slds-m-around--medium">
+
+        <!-- Detail and Related List Tab -->
+        <div class="slds-tabs--default">
+          <ul class="css-detail-page-nav slds-tabs--default__nav">
+            <li class="slds-tabs__item slds-text-heading--label {!IF(ISBLANK($CurrentPage.parameters.tab),'slds-active','')}"><a href="#" onclick="setDetailPageNav(this,'#detailsTab');">Details</a></li>
+            <li class="slds-tabs__item slds-text-heading--label {!IF($CurrentPage.parameters.tab=='related','slds-active','')}"><a href="#" onclick="setDetailPageNav(this, '#relatedTab');">Related</a></li>
+          </ul>
+
+          <!-- Details Tab -->
+          <div id="detailsTab" class="css-tab-content slds-tabs__content {!IF(ISBLANK($CurrentPage.parameters.tab),' slds-show','slds-hide')}">
+            <c:CSSDetailSection title="Invoice Information" recId="{!Id}" type="SAP_Invoice__c" set="Community_SAP_Invoice_Detail"></c:CSSDetailSection>
+          </div>
+          <!-- End Details Tab -->
+
+          <!-- Related List Tab -->
+          <div id="relatedTab" class="css-tab-content slds-tabs__content {!IF($CurrentPage.parameters.tab=='related',' slds-show','slds-hide')} ">
+            <c:CSSSAPInvoiceDetail invoiceNumber="{!SAP_Invoice__c.Name}"></c:CSSSAPInvoiceDetail>
+          </div>
+          <!-- End Related List Tab -->
+        
+        </div>
+        <!-- End Detail and Related List Tab -->
+
+      </div>
+      <!-- End Page Content -->  
+
+    </apex:define>
+  </apex:composition>
+</apex:page>

@@ -1,0 +1,24 @@
+<apex:component >
+  <script>j$ = jQuery.noConflict();</script>
+  <apex:attribute name="messages" description="List of page messages" type="CSS_PageMessage[]" required="true"/>
+  <apex:repeat value="{!messages}" var="message">
+    <div class="slds-m-horizontal--xx-large">
+    <div class="slds-notify-container css-page-message-container" style="position: static;">
+      <div class="slds-notify slds-notify--toast {!message.theme}" role="alert">
+        <span class="slds-assistive-text">{!message.severity}</span>
+        <button class="slds-button slds-notify__close" onclick="j$(this).closest('.css-page-message-container').hide();">
+          <img class="slds-button__icon" src="{!URLFOR($Resource.SLDS092, '/assets/icons/action/close_60.png')}" alt="close" />
+          <span class="slds-assistive-text">Close</span>
+        </button>
+        <div class="notify__content slds-grid slds-m-horizontal--small" > 
+          <div class="slds-col slds-align-middle"> 
+            <h2 class="slds-text-heading--small">
+              <apex:outputText escape="false" value="{!message.summary}"></apex:outputText>
+            </h2>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </apex:repeat> 
+</apex:component>
