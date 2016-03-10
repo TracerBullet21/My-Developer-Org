@@ -1,0 +1,43 @@
+<apex:page showHeader="false"  title="Johns Manville - Customer Self Service">
+  <apex:composition template="css_login_wrapper">
+    <apex:define name="content">
+      
+      <!-- Page Message -->
+      <div class="slds-m-horizontal--large slds-m-vertical--x-small">
+      </div>
+      
+      <!-- Error Messages -->
+      <div class="slds-m-top--x-small">
+        <apex:pageMessages ></apex:pageMessages>
+      </div>
+       
+      <!-- User Login and Registration Area -->
+      <div class="slds-m-horizontal--large slds-m-vertical--small">
+        <div class="slds-grid slds-nowrap">
+       
+          <!-- Image Area -->
+          <div class="slds-col slds-no-flex slds-m-vertical--x-small slds-align-top">
+            <div class="slds-m-right--large">
+              <img src="{!URLFOR($Resource.CustomerSelfService, '/assets/images/page-error.jpg')}" />
+            </div>
+          </div>
+          <!-- End Image Area -->
+
+          <!-- Message Area -->
+          <div class="slds-col slds-m-vertical--x-small slds-align-top">
+            <div class="">
+              Sorry, the page you are requesting is requiring a higher bandwidth connection. 
+              Please check your internet connectivity and try again.
+            </div>
+            <div class="slds-m-top--medium">
+               <apex:outputLink value="{!$Page.SiteLogin}" rendered="{!$Site.LoginEnabled}">{!$Label.site.go_to_login_page}</apex:outputLink>
+            </div>
+          </div>
+          <!-- Message Area -->
+      
+        </div>
+      </div>
+
+    </apex:define>
+  </apex:composition>
+</apex:page>

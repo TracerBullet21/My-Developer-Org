@@ -1,0 +1,91 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" standardController="Opportunity" extensions="CSS_DetailController">
+  <apex:composition template="css_wrapper">
+    <apex:define name="content"> 
+
+      <!-- Page Header --> 
+      <c:CSSPageHeader title="{!Opportunity.Name}" subtitle="Opportunity Detail" icon="/assets/icons/standard/opportunity_60.png" breadcrumb="true">
+        <a href="{!$Site.Prefix}/css_opportunity_edit?id={!id}"><button class="slds-button slds-button--neutral">Edit</button></a>
+      </c:CSSPageHeader>
+      
+      <!-- Page Content --> 
+      <div class="slds-m-around--medium">
+
+        <!-- Detail and Related List Tab -->
+        <div class="slds-tabs--default">
+          <ul class="css-detail-page-nav slds-tabs--default__nav">
+            <li class="slds-tabs__item slds-text-heading--label {!IF(ISBLANK($CurrentPage.parameters.tab),'slds-active','')}"><a href="#" onclick="setDetailPageNav(this,'#detailsTab');">Details</a></li>
+            <li class="slds-tabs__item slds-text-heading--label {!IF($CurrentPage.parameters.tab=='related','slds-active','')}"><a href="#" onclick="setDetailPageNav(this, '#relatedTab');">Related</a></li>
+          </ul>
+
+          <!-- Details Tab -->
+          <div id="detailsTab" class="css-tab-content slds-tabs__content  {!IF(ISBLANK($CurrentPage.parameters.tab),' slds-show','slds-hide')}">
+            <c:CSSDetailSection recId="{!Id}" type="Opportunity" set="Community_Opportunity_General"></c:CSSDetailSection>
+            <apex:outputPanel rendered="{!Opportunity.RecordType.DeveloperName == 'Lowes_Jobs'}">
+              <c:CSSDetailSection title="Key Job Information" recId="{!Id}" type="Opportunity" set="Community_Opportunity_Key_Detail_LJD"></c:CSSDetailSection>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!Opportunity.RecordType.DeveloperName == 'Lowes_Detail'}">
+              <c:CSSDetailSection title="Key Detail Information" recId="{!Id}" type="Opportunity" set="Community_Opportunity_Key_Detail_LDD"></c:CSSDetailSection>
+            </apex:outputPanel>
+            <c:CSSDetailSection title="Homeowner Information" recId="{!Id}" type="Opportunity" set="Community_Opportunity_Homeowner"></c:CSSDetailSection>
+          </div>
+          <!-- End Details Tab -->
+
+          <!-- Related List Tab -->
+          <div id="relatedTab" class="css-tab-content slds-tabs__content {!IF($CurrentPage.parameters.tab=='related',' slds-show','slds-hide')} ">
+            
+            <c:CSSRelatedList title="Opportunity Products" 
+              recId="{!Id}" 
+              icon="/assets/icons/standard/product_60.png" 
+              relationship="OpportunityId" 
+              type="OpportunityLineItem" 
+              set="Community_Opportunity_Product_List_View">
+            </c:CSSRelatedList>
+            
+            <c:CSSRelatedList title="Attachments and Notes" 
+              recId="{!Id}" 
+              icon="/assets/icons/standard/note_60.png"  
+              relationship="Opportunity_R__c" 
+              type="Attachment_JM_Obj__c" 
+              set="Community_Attachment_Note_List_View"
+              retURL="{!RelatedURL}"
+              enableEdit="true" 
+              enableDelete="true">
+              <a class="slds-button slds-button--neutral slds-button--small" href="{!$Site.Prefix}/css_attachment_jm_obj_edit?Opportunity_R__c={!Id}&retURL={!RelatedURL}">New Attachment</a>
+              <a class="slds-button slds-button--neutral slds-button--small" href="{!$Site.Prefix}/css_attachment_jm_obj_edit?Type__c=Note&Opportunity_R__c={!Id}&retURL={!RelatedURL}">New Note</a>
+            </c:CSSRelatedList>
+          
+            <c:CSSRelatedList title="Invoices" 
+              recId="{!Id}" 
+              icon="/assets/icons/standard/document_60.png" 
+              relationship="Opportunity__c" 
+              type="Invoice__c" 
+              set="Community_Invoice_List_View"
+              retURL="{!RelatedURL}"
+              enableEdit="true" 
+              enableDelete="true">
+              <apex:outputLink rendered="{!Opportunity.RecordType.DeveloperName == 'Lowes_Jobs'}" value="{!$Site.Prefix}/css_invoice_edit?recordTypeId=012i00000011WNWAA2&opportunity__c={!Id}&retURL={!RelatedURL}" styleClass="slds-button slds-button--neutral slds-button--small">New Invoice</apex:outputLink>
+              <apex:outputLink rendered="{!Opportunity.RecordType.DeveloperName == 'Lowes_Detail'}" value="{!$Site.Prefix}/css_invoice_edit?recordTypeId=012i00000011WNVAA2&opportunity__c={!Id}&retURL={!RelatedURL}" styleClass="slds-button slds-button--neutral slds-button--small">New Invoice</apex:outputLink>
+            </c:CSSRelatedList> 
+            
+            <c:CSSRelatedList title="Lowe's Cases" 
+              recId="{!Id}" 
+              icon="/assets/icons/standard/case_60.png" 
+              relationship="Related_Opportunity__c" 
+              type="Case" 
+              set="Community_Case_List_View_on_Oppty"
+              retURL="{!RelatedURL}"
+              enableEdit="true">
+            </c:CSSRelatedList>
+            
+          </div>
+          <!-- End Related List Tab -->
+        
+        </div>
+        <!-- End Detail and Related List Tab -->
+
+      </div>
+      <!-- End Page Content -->  
+
+    </apex:define>
+  </apex:composition>
+</apex:page>

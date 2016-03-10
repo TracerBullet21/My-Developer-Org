@@ -1,0 +1,27 @@
+<apex:component >
+  <div class="slds-m-vertical--medium">
+    <div id="css-carousel" class="carousel slide" data-ride="carousel">
+      
+      <!-- Indicators -->
+      <ol id="css-carousel-indicators" class="carousel-indicators">
+        <li data-target="#css-carousel" data-slide-to="0" class="active"></li>
+      </ol>
+
+      <!-- Wrapper for slides -->
+      <div id="css-carousel-images" class="carousel-inner" role="listbox">
+        <div class="item active">
+          <img src="{!URLFOR($Resource.SLDS092, '/assets/images/spinners/slds_spinner.gif')}" class="css-carousel-spinner--center" alt="" width="56" height="56"/>
+          <div class="carousel-caption"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- JavaScript controller logic for carousel images -->
+  <script>
+    j$(document).ready(function() {
+      displayCarouselImages();
+    });
+  </script>
+</apex:component>

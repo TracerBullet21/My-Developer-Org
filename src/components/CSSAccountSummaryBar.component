@@ -1,0 +1,34 @@
+<apex:component controller="CSS_AccountSummaryService" >
+
+  <div class="slds-p-horizontal--medium slds-p-vertical--xx-small" style="background-color:#EEEEEE">
+    <div class="slds-container--center" style="max-width:1360px;">
+      <div class="slds-grid slds-wrap">
+        <div class="slds-col slds-no-flex slds-m-vertical--x-small slds-m-right--medium slds-align-middle">
+          <p class="slds-text-heading--label" style="font-size:115%;">Account Summary</p>
+        </div>
+        <div class="slds-col slds-no-flex slds-m-vertical--x-small slds-m-right--medium slds-align-middle" style="white-space:nowrap">
+          <img class="slds-icon slds-icon--small" src="{!URLFOR($Resource.SLDS092, '/assets/icons/standard/account_60.png')}" alt="" style="background-color:#006BB7" />
+        </div>
+        <div class="slds-col slds-m-vertical--x-small slds-m-right--medium slds-align-middle">
+          <dl>
+            <dt>
+              <p class="slds-text-heading--label slds-truncate">YTD Net Revenue</p>
+            </dt>
+            <dd class="font-size-large" style="font-size:125%"><span id="css-net-revenue"></span></dd>
+          </dl>
+        </div>
+        <div class="slds-col slds-m-vertical--x-small slds-m-left--medium slds-align-middle slds-text-align--right slds-medium-show" style="color:white;">
+          <p><a href="{!$Site.Prefix}/css_account_summary_detail?id={!$User.Community_Account_Id__c}">View All Account Summary Details&nbsp;&raquo;</a></p>
+        </div> 
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript controller logic for loading account summary details -->
+  <apex:includeScript value="{!URLFOR($Resource.CustomerSelfService, 'assets/scripts/account-summary.js')}" />
+  <script>
+    j$(document).ready(function() {
+      loadAccountSummary();
+    });
+  </script>
+</apex:component>

@@ -1,0 +1,25 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" standardController="Invoice__c" extensions="CSS_DetailController">
+  <apex:composition template="css_wrapper">
+    <apex:define name="content"> 
+
+      <!-- Page Header --> 
+      <c:CSSPageHeader title="{!Invoice__c.Name}" subtitle="Invoice Detail" icon="/assets/icons/standard/document_60.png" breadcrumb="true">
+        <a href="{!$Site.Prefix}/css_invoice_edit?id={!id}"><button class="slds-button slds-button--neutral">Edit</button></a>
+      </c:CSSPageHeader>
+        
+      <!-- Details Tab -->
+      <div class="css-tab-content slds-tabs__content">
+        <apex:outputPanel rendered="{!Invoice__c.RecordType.DeveloperName == 'Lowes_Job'}">
+          <c:CSSDetailSection title="Invoice Detail Information" recId="{!Id}" type="Invoice__c" set="Community_Invoice_Detail_Info_LJ"></c:CSSDetailSection> 
+          <c:CSSDetailSection title="Additional Information" recId="{!Id}" type="Invoice__c" set="Community_Invoice_Additional_Info_LJ"></c:CSSDetailSection>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!Invoice__c.RecordType.DeveloperName == 'Lowes_Detail'}">
+          <c:CSSDetailSection title="Invoice Detail Information" recId="{!Id}" type="Invoice__c" set="Community_Invoice_Detail_Info_LD"></c:CSSDetailSection>
+          <c:CSSDetailSection title="Additional Information" recId="{!Id}" type="Invoice__c" set="Community_Invoice_Additional_Inform_LD"></c:CSSDetailSection>
+        </apex:outputPanel>
+      </div>
+      <!-- End Details Tab -->
+
+    </apex:define>
+  </apex:composition>
+</apex:page>

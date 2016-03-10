@@ -1,0 +1,48 @@
+<apex:page showHeader="false"  title="Johns Manville - Customer Self Service">
+  <apex:composition template="css_login_wrapper">
+    <apex:define name="content">
+      
+      <!-- Page Message -->
+      <div class="slds-m-horizontal--large slds-m-vertical--x-small">
+      </div>
+      
+      <!-- Error Messages -->
+      <div class="slds-m-top--x-small">
+        <apex:pageMessages ></apex:pageMessages>
+      </div>
+       
+      <!-- User Login and Registration Area -->
+      <div class="slds-m-horizontal--large slds-m-vertical--small">
+        <div class="slds-grid slds-nowrap">
+       
+          <!-- Image Area -->
+          <div class="slds-col slds-no-flex slds-m-vertical--x-small slds-align-top">
+            <div class="slds-m-right--large">
+              <img src="{!URLFOR($Resource.CustomerSelfService, '/assets/images/page-error.jpg')}" />
+            </div>
+          </div>
+          <!-- End Image Area -->
+
+          <!-- Message Area -->
+          <div class="slds-col slds-m-vertical--x-small slds-align-top">
+            <div class="">
+              Oops! Something went wrong! Please return to the page you were on using the 
+              browser's back button and try again. If you continue to get this error, please 
+              contact your JM Account Manager and let him/her know what page you were attempting
+              to access.
+            </div>
+            <div class="slds-m-top--medium slds-text-heading--small">
+              <apex:outputText value="{!$Site.ErrorMessage}" escape="false" />
+            </div>
+            <div>
+              <apex:outputText value="{!$Site.ErrorDescription}" escape="false" />
+            </div>
+          </div>
+          <!-- End Message Area -->
+      
+        </div>
+      </div>
+
+    </apex:define>
+  </apex:composition>
+</apex:page>

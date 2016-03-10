@@ -1,0 +1,78 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" standardController="Case" extensions="CSS_DetailController">
+  <apex:composition template="css_wrapper">
+    <apex:define name="content">   
+
+      <!-- Page Header (Comlaint) -->
+      <apex:outputPanel rendered="{!Case.RecordType.DeveloperName == 'Complaint'}">
+        <c:CSSPageHeader title="{!Case.CaseNumber}" subtitle="Case Detail" icon="/assets/icons/standard/case_60.png" breadcrumb="true"></c:CSSPageHeader>
+      </apex:outputPanel>
+      
+      <!-- Page Header (Lowes Installed Sales) -->
+      <apex:outputPanel rendered="{!Case.RecordType.DeveloperName == 'Lowe_s_Installed_Sales'}">
+        <c:CSSPageHeader title="{!Case.CaseNumber}" icon="/assets/icons/standard/case_60.png">
+        <a href="{!$Site.Prefix}/css_case_edit?id={!id}"><button class="slds-button slds-button--neutral">Edit</button></a>
+        </c:CSSPageHeader>
+      </apex:outputPanel>
+
+      <!-- Page Content --> 
+      <div class="slds-m-around--medium">
+
+        <!-- Detail and Related List Tab -->
+        <div class="slds-tabs--default">
+          <ul class="css-detail-page-nav slds-tabs--default__nav">
+            <li class="slds-tabs__item slds-text-heading--label {!IF(ISBLANK($CurrentPage.parameters.tab),'slds-active','')}"><a href="#" onclick="setDetailPageNav(this,'#detailsTab');">Details</a></li>
+            <li class="slds-tabs__item slds-text-heading--label {!IF($CurrentPage.parameters.tab=='related','slds-active','')}"><a href="#" onclick="setDetailPageNav(this, '#relatedTab');">Related</a></li>
+          </ul>
+
+          <!-- Details Tab -->
+          <div id="detailsTab" class="css-tab-content slds-tabs__content {!IF(ISBLANK($CurrentPage.parameters.tab),' slds-show','slds-hide')}">
+            <apex:outputPanel rendered="{!Case.RecordType.DeveloperName == 'Complaint'}">
+              <c:CSSDetailSection title="Key Job Information" recId="{!Id}" type="Case" set="Community_Case_Description_Info_CD"></c:CSSDetailSection>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!Case.RecordType.DeveloperName == 'Lowe_s_Installed_Sales'}">
+              <c:CSSDetailSection title="Key Detail Information" recId="{!Id}" type="Case" set="Community_Case_Detail_LISD"></c:CSSDetailSection>       
+              <c:CSSDetailSection title="Homeowner Information" recId="{!Id}" type="Case" set="Community_Case_Description_Info_LISD"></c:CSSDetailSection>
+            </apex:outputPanel>
+          </div>
+          <!-- End Details Tab --> 
+
+          <!-- Related List Tab -->
+          <div id="relatedTab" class="css-tab-content slds-tabs__content {!IF($CurrentPage.parameters.tab=='related',' slds-show','slds-hide')} ">
+          
+            <apex:outputPanel rendered="{!Case.RecordType.DeveloperName == 'Complaint'}">
+              <c:CSSRelatedList title="Complaint Line Items" 
+                recId="{!Id}" 
+                icon="/assets/icons/standard/case_change_status_60.png"
+                relationship="Complaint__c" 
+                type="Complaint_Line_Item__c" 
+                set="CSS_Complaint_Line_Items">
+              </c:CSSRelatedList>
+            </apex:outputPanel>
+            
+            <apex:outputPanel rendered="{!Case.RecordType.DeveloperName == 'Lowe_s_Installed_Sales'}">
+              <c:CSSRelatedList title="Attachments and Notes" 
+                recId="{!Id}" 
+                icon="/assets/icons/standard/note_60.png"  
+                relationship="Case_R__c" 
+                type="Attachment_JM_Obj__c" 
+                set="Community_Attachment_Note_List_View"
+                retURL="{!RelatedURL}"
+                enableEdit="true" 
+                enableDelete="true">
+                <a class="slds-button slds-button--neutral slds-button--small" href="{!$Site.Prefix}/css_attachment_jm_obj_edit?Case_R__c={!Id}&retURL={!RelatedURL}">New Attachment</a>
+                <a class="slds-button slds-button--neutral slds-button--small" href="{!$Site.Prefix}/css_attachment_jm_obj_edit?Type__c=Note&Case_R__c={!Id}&retURL={!RelatedURL}">New Note</a>
+              </c:CSSRelatedList>
+            </apex:outputPanel>
+
+          </div>
+          <!-- End Related List Tab -->
+            
+        </div>
+        <!-- End Detail and Related List Tab -->
+
+      </div>
+      <!-- End Page Content -->  
+
+    </apex:define>
+  </apex:composition>
+</apex:page>

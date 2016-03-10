@@ -1,0 +1,87 @@
+<apex:page showHeader="false" controller="CSS_LoginController" title="Johns Manville - Customer Self Service">
+  <apex:composition template="css_login_wrapper">
+    <apex:define name="content">
+   
+      <!-- Welcome Message -->
+      <div class="slds-m-horizontal--large slds-m-vertical--x-small">
+      Welcome to JMConnexus, the Johns Manville Customer Portal. Please use the Username and Password assigned to you to log in. If you don't remember your Username, please contact your JM Account Manager.  
+      </div>
+      
+      <!-- Error Messages -->
+      <div class="slds-m-top--x-small">
+        <apex:pageMessages ></apex:pageMessages>
+      </div>
+       
+      <!-- User Login and Registration Area -->
+      <div class="slds-m-horizontal--large slds-m-vertical--small">
+        <apex:form id="SG_Login_Form" forceSSL="true">
+          <div class="slds-grid slds-nowrap">
+         
+            <!-- Login Area -->
+            <div class="slds-col slds-no-flex slds-m-vertical--x-small slds-align-top">
+              <div class="slds-m-right--large">
+           
+                <!-- Login Section -->
+                <apex:outputPanel rendered="{!NOT(isForgotMode)}" layout="block">
+                  <div class="slds-text-heading--medium">Login</div>
+                  <div class="slds-form-element slds-m-vertical--x-small">
+                    <label class="slds-form-element__label" for="username">Username</label>
+                    <div class="slds-form-element__control">
+                      <apex:inputText id="username" styleClass="slds-input" value="{!username}"></apex:inputText>
+                    </div>
+                  </div>
+                  <div class="slds-form-element slds-m-vertical--x-small">
+                    <label class="slds-form-element__label" for="password">Password</label>
+                    <div class="slds-form-element__control">
+                      <apex:inputSecret id="password" styleClass="slds-input" value="{!password}"></apex:inputSecret>
+                    </div>
+                  </div>
+                  <div class="slds-m-vertical--medium">                    
+                    <apex:commandButton action="{!login}" styleClass="slds-button slds-button--brand" style="white-space:nowrap" value="Log in to JMConnexus"></apex:commandButton>
+                  </div>
+                  <div>
+                    <apex:commandLink action="{!setForgotModeTrue}" rerender="SG_Login_Form">{!$Label.site.forgot_your_password_q}</apex:commandLink>
+                  </div>
+                </apex:outputPanel> 
+                <!-- End Login Section -->
+                
+                <!-- Forgot Your Password Section -->
+                <apex:outputPanel rendered="{!isForgotMode}" layout="block">
+                  <div class="slds-text-heading--medium">Forgot Your Password</div>
+                  <div class="slds-form-element slds-m-vertical--small">
+                    <label class="slds-form-element__label" for="forgot-username">Username</label>
+                    <div class="slds-form-element__control">
+                      <apex:inputText id="forgot-username" styleClass="slds-input" value="{!username}"></apex:inputText>
+                    </div>
+                  </div>
+                  <apex:commandButton action="{!forgotPassword}" styleClass="slds-button slds-button--brand slds-m-right--small" style="white-space:nowrap" value="Reset Password"></apex:commandButton>
+                  <apex:commandButton action="{!setForgotModeFalse}" rerender="SG_Login_Form" styleClass="slds-button slds-button--neutral" style="white-space:nowrap" value="Cancel"></apex:commandButton>
+                </apex:outputPanel>
+                <!-- Forgot Your Password Section -->
+            
+              </div>
+            </div>
+            <!-- End Login Area -->
+
+            <!-- Image Area -->
+            <div class="slds-col slds-m-vertical--x-small slds-align-top slds-medium-show">
+              <div class="slds-text-align--center">
+                <img src="{!URLFOR($Resource.CustomerSelfService, '/assets/images/login-image-right.jpg')}" width="600" />
+              </div>
+            </div>
+            <!-- End Image Area -->
+        
+          </div>
+        </apex:form>
+
+        <!-- Disclaimer  -->
+        <div class="slds-m-bottom--x-small">
+        *This site is optimized for the latest versions of Chrome, Firefox, Safari, and Internet 
+        Explorer 11 and above.
+        </div>
+        
+      </div>
+      
+    </apex:define>
+  </apex:composition>
+</apex:page>

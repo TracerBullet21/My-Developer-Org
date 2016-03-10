@@ -1,0 +1,12 @@
+<apex:component controller="CSS_AnnouncementService"> 
+  <div class="slds-container--center slds-m-top--medium" style="max-width:1360px;">
+    <div id="css-session-alerts"></div>
+  </div>
+
+  <!-- JavaScript controller logic for session alerts -->
+  <script>
+    j$(document).ready(function() {
+      displayAlerts('{!URLFOR($Resource.SLDS092, '/assets/icons/')}');
+    });
+  </script>
+</apex:component>

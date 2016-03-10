@@ -1,0 +1,30 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">    
+<html>    
+  <head>
+    <title>Johns Manville</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=2.0" />
+    <meta name="format-detection" content="telephone=no" />
+    <apex:stylesheet value="{!URLFOR($Resource.SLDS092, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.CustomerSelfService, '/assets/styles/ac-login.css')}"/>
+  </head>
+  <body style="margin:0px;background-color:#006BB7">   
+
+    <div class="slds">
+      <div class="slds-container--center slds-container--medium">
+        <div class="css-public-compact">
+          <div class="css-public-content-wrapper">
+            <div class="slds-m-horizontal--large slds-m-vertical--large">
+              <a href="{!$Site.Prefix}/css_home">
+                <img src="{!URLFOR($Resource.CustomerSelfService, '/assets/images/logo-jm-connexus-login.gif')}"/>
+              </a>
+            </div>
+            <apex:insert name="content"></apex:insert>
+          </div>
+        </div>
+        <c:CSSFooter ></c:CSSFooter>     
+      </div>
+    </div>
+
+  </body>        
+</html>
+</apex:page>

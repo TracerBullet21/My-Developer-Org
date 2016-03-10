@@ -1,0 +1,57 @@
+<apex:component controller="CSS_SAPInvoiceDetailService" >
+  <apex:attribute name="invoiceNumber" description="Unique SAP invoice number" type="String" required="true"/>
+  
+  <!-- Invoice Line Items -->  
+  <div>
+    <div>
+      <div class="slds-card">
+        <div class="slds-card__header slds-grid">
+          <div class="slds-media slds-media--center slds-has-flexi-truncate">
+            <div class="slds-media__figure">
+              <img class="slds-icon slds-icon--small" src="{!URLFOR($Resource.SLDS092, '/assets/icons/standard/record_60.png')}" alt="" style="background-color:#006BB7" />
+            </div>
+            <div class="slds-media__body">
+              <h2 class="slds-text-heading--small slds-truncate">Invoice Line Items</h2>
+            </div>
+          </div>
+        </div>
+        <div class="slds-card__body">
+          <table class="slds-table slds-table--bordered slds-max-medium-table--stacked-horizontal slds-no-row-hover slds-table--striped">
+            <thead>
+              <tr class="slds-text-heading--label">
+                <th><span style="white-space:nowrap">Item #</span></th>
+                <th><span style="white-space:nowrap">Material #</span></th> 
+                <th><span style="white-space:normal">Material Description</span></th>    
+                <th><span style="white-space:normal">Quantity</span></th>
+                <th><span style="white-space:normal">Unit Price</span></th>
+                <th><span style="white-space:normal">Value</span></th>
+                <th><span style="white-space:nowrap">PO #</span></th>
+              </tr>
+            </thead>
+            <tbody id="css-order-detail-body">
+              <tr>
+                <td colspan="7">
+                 <div class="slds-grid slds-grid--align-center">
+                    <div id="css-order-detail-spinner" class="slds-spinner--medium slds-col">
+                      <img src="{!URLFOR($Resource.SLDS092, '/assets/images/spinners/slds_spinner.gif')}" alt="Loading..." />
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="slds-card__footer">&nbsp;</div>
+      </div>
+    </div>
+  </div>
+  <!-- End Invoice Line Items -->   
+
+  <!-- JavaScript controller logic for invoice line item details -->
+  <apex:includeScript value="{!URLFOR($Resource.CustomerSelfService, '/assets/scripts/line-item-details.js')}" />
+  <script>
+    j$(document).ready(function() {
+      displayInvoiceDetails('{!invoiceNumber}');
+    });
+  </script>
+</apex:component>

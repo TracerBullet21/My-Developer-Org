@@ -1,0 +1,120 @@
+<apex:component controller="CSS_AnnouncementService">
+  <div class="slds-m-vertical--medium slds-p-around--small" style="border:1px solid #C4C6C9;">
+        
+    <!-- To Do Header -->
+    <div class="slds-p-around--medium" style="background-color:#EEEEEE;border-bottom:1px solid #C4C6C9;">
+      <p class="slds-text-align--left slds-text-heading--small" style="font-weight:500">What Would You Like to Do Today?</p>
+    </div>
+    <!-- End To Do Header -->
+    
+    <!-- To Do Links -->
+    <div class="slds-p-left--small slds-p-vertical--medium" style="border-bottom:1px solid #C4C6C9;">
+      
+      <apex:outputPanel layout="block" styleClass="slds-p-vertical--xx-small" rendered="{!$Permission.AC_View_Accounts_Tab}">
+        <div class="slds-media slds-media--center" >
+          <div class="slds-media__figure">
+            <img class="slds-icon slds-icon--small" src="{!URLFOR($Resource.SLDS092, '/assets/icons/standard/account_60.png')}" alt="" style="background-color:#006BB7" />
+          </div>
+          <div class="slds-media__body">
+            <p><a href="https://devpro1-jm.cs42.force.com/agents/ac_community_list?type=Account&community=AC" style="font-size:115%;">Manage Accounts&nbsp;&raquo;</a></p>
+          </div>
+        </div> 
+      </apex:outputPanel>
+      
+      <apex:outputPanel layout="block" styleClass="slds-p-vertical--xx-small" rendered="{!$Permission.AC_View_Contacts_Tab}">
+        <div class="slds-media slds-media--center" >
+          <div class="slds-media__figure">
+            <img class="slds-icon slds-icon--small" src="{!URLFOR($Resource.SLDS092, '/assets/icons/standard/contact_60.png')}" alt="" style="background-color:#006BB7" />
+          </div>
+          <div class="slds-media__body">
+            <p><a href="https://devpro1-jm.cs42.force.com/agents/ac_community_list?type=Contact&community=AC" style="font-size:115%;">Manage Contacts&nbsp;&raquo;</a></p>
+          </div>
+        </div> 
+      </apex:outputPanel>
+      
+      <apex:outputPanel layout="block" styleClass="slds-p-vertical--xx-small" rendered="{!$Permission.AC_View_Opportunities_Tab}">
+        <div class="slds-media slds-media--center" >
+          <div class="slds-media__figure">
+            <img class="slds-icon slds-icon--small" src="{!URLFOR($Resource.SLDS092, '/assets/icons/standard/opportunity_60.png')}" alt="" style="background-color:#006BB7" />
+          </div>
+          <div class="slds-media__body">
+            <p><a href="https://devpro1-jm.cs42.force.com/agents/ac_community_list?type=Opportunity&community=AC" style="font-size:115%;">Search for Projects&nbsp;&raquo;</a></p>
+          </div>
+        </div> 
+      </apex:outputPanel>
+      
+      
+      
+      
+      <apex:outputPanel layout="block" styleClass="slds-p-vertical--xx-small" rendered="{!$Permission.CSS_View_Orders_Tab}">
+        <div class="slds-media slds-media--center" >
+          <div class="slds-media__figure">
+            <img class="slds-icon slds-icon--small" src="{!URLFOR($Resource.SLDS092, '/assets/icons/standard/orders_60.png')}" alt="" style="background-color:#006BB7" />
+          </div>
+          <div class="slds-media__body">
+            <p><a href="{!$Site.Prefix}/css_community_list?type=Order__c" style="font-size:115%;">Look up/check on an Order&nbsp;&raquo;</a></p>
+          </div>
+        </div> 
+      </apex:outputPanel>
+
+      <apex:outputPanel layout="block" styleClass="slds-p-vertical--xx-small" rendered="{!$Permission.CSS_View_Invoices_Tab}">
+        <div class="slds-media slds-media--center">
+          <div class="slds-media__figure">
+            <img class="slds-icon slds-icon--small" src="{!URLFOR($Resource.SLDS092, '/assets/icons/standard/document_60.png')}" alt="" style="background-color:#006BB7" />
+          </div>
+          <div class="slds-media__body">
+            <p><a href="{!$Site.Prefix}/css_community_list?type=SAP_Invoice__c" style="font-size:115%;">Find an Invoice&nbsp;&raquo;</a></p>
+          </div>
+        </div>
+      </apex:outputPanel>
+      
+      <apex:outputPanel layout="block" styleClass="slds-p-vertical--xx-small" rendered="{!$Permission.CSS_View_Cases_Tab}">
+        <div class="slds-media slds-media--center">
+          <div class="slds-media__figure">
+            <img class="slds-icon slds-icon--small" src="{!URLFOR($Resource.SLDS092, '/assets/icons/standard/case_60.png')}" alt="" style="background-color:#006BB7" />
+          </div>
+          <div class="slds-media__body">
+            <p><a href="{!$Site.Prefix}/css_community_list?type=Case" style="font-size:115%;">Check on the status of a Case&nbsp;&raquo;</a></p>
+          </div>
+        </div>
+      </apex:outputPanel>
+      
+      <apex:outputPanel layout="block" styleClass="slds-p-vertical--xx-small" rendered="{!$Permission.CSS_View_Opportunities_Tab}">
+        <div class="slds-media slds-media--center">
+          <div class="slds-media__figure">
+            <img class="slds-icon slds-icon--small" src="{!URLFOR($Resource.SLDS092, '/assets/icons/standard/opportunity_60.png')}" alt="" style="background-color:#006BB7" />
+          </div>
+          <div class="slds-media__body">
+            <p><a href="{!$Site.Prefix}/css_community_list?type=Opportunity" style="font-size:115%;">See my latest Opportunities&nbsp;&raquo;</a></p>
+          </div>
+        </div>
+      </apex:outputPanel>
+      
+      <apex:outputPanel layout="block" styleClass="slds-p-vertical--xx-small" rendered="{!$Permission.CSS_View_Account_Summary}">
+        <div class="slds-media slds-media--center">
+          <div class="slds-media__figure">
+            <img class="slds-icon slds-icon--small" src="{!URLFOR($Resource.SLDS092, '/assets/icons/standard/account_60.png')}" alt="" style="background-color:#006BB7" />
+          </div>
+          <div class="slds-media__body">
+            <p><a href="{!$Site.Prefix}/css_account_summary_detail?id={!$User.Community_Account_Id__c}" style="font-size:115%;">View Account Summary Details&nbsp;&raquo;</a></p>
+          </div>
+        </div>
+      </apex:outputPanel>
+    </div>
+    <!-- End To Do Links -->
+    
+    <!-- Helful Links -->
+    <div class="slds-m-top--small">
+      <div id="css-helpful-links" class="slds-p-left--small"></div>
+    </div>
+    <!-- End Helful Links -->
+             
+ </div>
+
+  <!-- JavaScript controller logic for helpful links -->
+  <script>
+    j$(document).ready(function() {
+      displayHelpfulLinks();
+    });
+  </script>
+</apex:component>

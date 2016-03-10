@@ -1,0 +1,31 @@
+<apex:component controller="CSS_DetailSectionController">
+  <apex:attribute name="title" description="Detail section title" type="String" required="false" />
+  <apex:attribute name="recId" description="Detail record identitifer" type="Id" required="true" assignTo="{!recordId}"/>
+  <apex:attribute name="type" description="Salesforce API name of object" type="String" required="true" assignTo="{!objectType}"/>
+  <apex:attribute name="set" description="Name of field set" type="String" required="true" assignTo="{!fieldSetName}"/>
+
+  <!-- Loop through Field Sets and Display Records -->
+  <div class="slds-col--padded slds-p-bottom--medium">
+    <p class="slds-section-title">{!title}</p> 
+    <div class="slds-grid slds-wrap">
+      <apex:repeat value="{!fieldSet.fields}" var="field">
+        <div class="slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2 slds-m-vertical--x-small">  
+          <div class="slds-tile" style="border-bottom: 1px solid #D8DDE6;">
+            <p class="slds-tile__title slds-truncate">{!field.Label}
+              <apex:outputPanel layout="inline" rendered="{!NOT(ISBLANK($ObjectType[type].Fields[field.Name].InlineHelpText))}">
+                <a href="#" class="css-tooltip" title="{!$ObjectType[type].Fields[field.Name].InlineHelpText}" data-toggle="tooltip">
+                  <img class="slds-icon slds-icon--small" style="width:16px;height:16px;" src="{!URLFOR($Resource.SLDS092, '/assets/icons/utility/info_60.png')}" alt="" />
+                </a>
+              </apex:outputPanel>
+            </p>
+            <div class="slds-tile__detail slds-text-body--regular">
+              <p style="font-weight: bold;"><apex:outputField value="{!record[field.Name]}"/>&nbsp;</p>
+            </div>
+          </div>
+        </div>
+      </apex:repeat>
+    </div>
+  </div>
+  <!-- End Loop through Field Sets and Display Records -->
+
+</apex:component>

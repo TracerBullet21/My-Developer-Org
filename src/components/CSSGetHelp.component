@@ -1,0 +1,32 @@
+<apex:component >
+            
+  <!-- Get Help -->
+  <div class="slds-m-vertical--medium slds-p-around--medium" style="background-color:#EEEEEE; border:1px solid #C4C6C9;">
+    <div class="slds-media slds-media--center" >
+      <div class="slds-media__figure">
+        <img class="slds-icon" src="{!URLFOR($Resource.SLDS092, '/assets/icons/utility/questions_and_answers_60.png')}" alt="" />
+      </div>
+      <div class="slds-media__body">
+        <p>Get help when you need it</p>
+        <p class="slds-text-heading--small" style="font-weight:500">JM Support - Ready for You</p>
+      </div>
+    </div> 
+    <div class="slds-m-top--medium">
+      <p class="slds-text-heading--label">BY EMAIL (24x7)</p>
+      <p id="css-help-email" style="font-weight:bold;"></p>
+    </div>
+    <div class="slds-m-top--small">
+      <p class="slds-text-heading--label">BY PHONE </p>
+      <p id="css-help-phone" style="font-weight:bold;"></p>
+    </div>
+  </div>
+  <!-- End Get Help -->
+
+  <!-- JavaScript logic for phone numbers and emails -->
+  <script>
+    j$(document).ready(function() {
+      j$('#css-help-phone').html('{!$User.Community_Support_Contact_Phone__c}');
+      j$('#css-help-email').html('{!$User.Community_Support_Contact_Email__c}');
+    });
+  </script>
+</apex:component>

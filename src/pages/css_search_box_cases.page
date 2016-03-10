@@ -1,0 +1,50 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" controller="CSS_ListController">
+  <div xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <apex:form id="listForm">
+      <div class="slds-grid slds-wrap">
+
+        <!-- Keyword Search Filter -->
+        <div class="slds-col--padded">
+          <apex:outputLabel for="css-search-key-word" styleClass="slds-form-element__label">Keyword Search
+            <a href="#" class="css-tooltip" title="{!$Label.CSS_Search_Help_Cases}" data-toggle="tooltip">
+              <img class="slds-icon slds-icon--small" style="width:16px;height:16px;position:relative;top:-3px;" src="{!URLFOR($Resource.SLDS092, '/assets/icons/utility/info_60.png')}" alt="" />
+            </a>
+          </apex:outputLabel>
+          <div class="slds-form-element">
+            <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+              <svg aria-hidden="true" class="slds-input__icon">
+                <use xlink:href="{!URLFOR($Resource.SLDS092, '/assets/icons/utility-sprite/svg/symbols.svg#search')}"></use>
+              </svg>
+              <apex:input id="css-search-key-word"  value="{!keys}" styleClass="slds-input" type="text" />
+            </div>
+          </div>
+        </div>
+        <!-- End Keyword Search Filter --> 
+        
+       <!-- Case Record Type Name Filter -->
+        <div class="slds-col--padded">
+          <div class="slds-form-element">
+            <apex:outputLabel for="css-search-case-type" styleClass="slds-form-element__label">Case Record Type</apex:outputLabel>
+            <div class="slds-form-element__control">
+              <apex:selectList id="css-search-case-type" styleClass="slds-select" value="{!recordType}" multiselect="false" size="1">
+                <apex:selectOption itemValue="" itemLabel="Show All"></apex:selectOption>
+                <apex:selectOption itemValue="012i00000011WNK" itemLabel="Lowe's Installed Sales"></apex:selectOption>
+                <apex:selectOption itemValue="012i00000011WNI" itemLabel="Complaint"></apex:selectOption>
+              </apex:selectList>
+            </div>
+          </div>
+        </div>
+        <!-- End Case Record Type Name Filter -->
+        
+        <!-- Search & Clear All Filters Button --> 
+        <div class="slds-col--padded">
+          <legend class="slds-form-element__label">&nbsp;</legend>
+          <apex:commandButton action="{!search}" reRender="css-search-table,css-search-message,css-search-pagination" styleClass="slds-button slds-button--brand" style="white-space:nowrap" value="Search" onclick="showSpinner('#css-search-spinner');" oncomplete="hideSpinner('#css-search-spinner');"></apex:commandButton>
+          <apex:commandButton action="{!clear}" reRender="css-search-table,css-search-message,css-search-pagination" styleClass="slds-button slds-button--neutral slds-m-left--small" style="white-space:nowrap" value="Clear" onclick="showSpinner('#css-search-spinner');" oncomplete="document.getElementById('{!$Component.listForm}').reset();hideSpinner('#css-search-spinner');"></apex:commandButton>
+        </div>
+        <!-- End Search & Clear All Filters Button -->
+        
+      </div>
+    </apex:form>
+  </div>
+</apex:page>

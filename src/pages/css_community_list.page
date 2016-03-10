@@ -1,0 +1,96 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" controller="CSS_ListController">
+  <apex:composition template="css_wrapper">
+    <apex:define name="header">
+      <apex:includeScript value="{!URLFOR($Resource.CustomerSelfService, '/assets/libraries/datepicker/datepicker.min.js')}" />
+      <apex:includeScript value="{!URLFOR($Resource.CustomerSelfService, '/assets/scripts/datepicker.js')}" />
+      <apex:stylesheet value="{!URLFOR($Resource.CustomerSelfService, '/assets/libraries/datepicker/datepicker.min.css')}" />
+    </apex:define>
+    <apex:define name="content">
+
+      <!-- Page Header --> 
+      <c:CSSPageHeader title="{!title}" subtitle="{!title} Search" icon="{!icon}" breadcrumb="true"></c:CSSPageHeader>
+
+      <!-- Table Filter Box -->
+      <div class="slds-m-vertical--medium slds-p-around--medium slds-m-top--medium" style="background-color:#EEEEEE; border:1px solid #C4C6C9;">
+        
+        <apex:include rendered="{!objectType=='Order__c'}" pageName="css_search_box_orders"/>
+        <apex:include rendered="{!objectType=='SAP_Invoice__c'}" pageName="css_search_box_sap_invoices"/>
+        <apex:include rendered="{!objectType=='Case'}" pageName="css_search_box_cases"/>
+        <apex:include rendered="{!objectType=='Opportunity'}" pageName="css_search_box_opportunities"/>
+          
+      </div>
+      <!-- End Table Filter Box -->
+   
+      <!-- Table of Records -->  
+      <div class="slds-m-vertical--medium">
+        <apex:outputPanel id="css-search-table">
+          
+          <!-- Loading Spinner -->
+          <div id="css-search-spinner" class="slds-m-vertical--medium" style="display:none;">
+            <div class="slds-grid slds-grid--align-center">
+              <div class="slds-spinner--medium slds-col">
+                <img src="{!URLFOR($Resource.SLDS092, '/assets/images/spinners/slds_spinner.gif')}" alt="Loading..." />
+              </div>
+            </div>
+          </div>
+          
+          <!-- Search Results -->
+          <apex:form >
+            <table class="slds-table slds-table--bordered slds-max-medium-table--stacked-horizontal slds-table--striped">
+              <thead>
+                <tr class="slds-text-heading--label">
+                  <apex:repeat value="{!fieldSet.fields}" var="field"> 
+                    <th class="slds-is-sortable" scope="col">
+                      <apex:outputpanel >
+                        <apex:outputText value="{!field.Label}" style="white-space:normal" />
+                        <apex:actionSupport event="onclick" action="{!search}" reRender="css-search-table,css-search-message,css-search-pagination" onsubmit="showSpinner('#css-search-spinner');" oncomplete="hideSpinner('#css-search-spinner');">
+                          <apex:param name="orderBy" value="{!field.Name}" assignTo="{!orderBy}"/>
+                          <apex:param name="isAscending" value="{!NOT(isAscending)}" assignTo="{!isAscending}"/>
+                        </apex:actionSupport>
+                      </apex:outputpanel>
+                    </th>
+                  </apex:repeat>
+                </tr>
+              </thead>
+              <tbody>
+                <apex:repeat value="{!Records}" var="record"> 
+                  <tr class="slds-hint-parent">
+                    <apex:repeat value="{!fieldSet.fields}" var="field"> 
+                      <td data-label="{!field.Label}">
+                        <span style="white-space:normal">
+                          <apex:outputLink rendered="{!(field.First)}" value="{!$Site.Prefix}/css_{!SUBSTITUTE(LOWER(objectType),'__c','')}_detail?id={!record.Id}" ><apex:outputField value="{!record[field.Name]}"/></apex:outputLink>
+                          <apex:outputField rendered="{!(!field.First)}" value="{!record[field.Name]}" style="white-space:normal" />
+                        </span>
+                      </td>
+                    </apex:repeat> 
+                  </tr> 
+                </apex:repeat>
+              </tbody>
+            </table>
+          </apex:form>
+        </apex:outputPanel>
+      </div>
+      <!-- End Table of Records -->
+
+      <!-- Search Page Messages (i.e., no records found) -->
+      <apex:outputPanel id="css-search-message" layout="block" StyleClass="slds-container--center slds-m-vertical--medium slds-text-align--center">
+        <apex:repeat value="{!messages}" var="message"> 
+          <div><apex:outputText styleClass="slds-m-horizontal--x-small" value="{!message}"></apex:outputText></div>
+        </apex:repeat>
+      </apex:outputPanel>
+      <!-- End Search Page Messages (i.e., no records found) -->
+      
+      <!-- Pagination -->
+      <apex:outputPanel id="css-search-pagination" layout="block" styleClass="slds-container--center slds-m-vertical--medium slds-text-align--center">
+        <apex:form >
+          <apex:commandLink rendered="{!HasPrevious}" action="{!previous}" reRender="css-search-table,css-search-message,css-search-pagination" styleClass="slds-m-horizontal--x-small" style="text-decoration:none;" onclick="showSpinner('#css-search-spinner');" oncomplete="hideSpinner('#css-search-spinner');">&lt;&nbsp;Previous</apex:commandLink>
+          <apex:outputText rendered="{!NOT(HasPrevious)}" styleClass="slds-m-horizontal--x-small" style="text-decoration: none;color:#CCCCCC" >&lt;&nbsp;Previous</apex:outputText>
+          <apex:commandLink rendered="{!HasNext}" action="{!next}" reRender="css-search-table,css-search-message,css-search-pagination" styleClass="slds-m-horizontal--x-small" style="text-decoration:none" onclick="showSpinner('#css-search-spinner');" oncomplete="hideSpinner('#css-search-spinner');">Next&nbsp;&gt;</apex:commandLink>
+          <apex:outputText rendered="{!NOT(HasNext)}" styleClass="slds-m-horizontal--x-small" style="text-decoration: none;color:#CCCCCC">Next&nbsp;&gt;</apex:outputText>
+        </apex:form>
+      </apex:outputPanel>
+      <!-- End Pagination -->
+
+    </apex:define>
+  </apex:composition>
+</apex:page>
